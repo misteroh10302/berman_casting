@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import {Link} from 'react-router-dom'
 import logo from './berman.png';
+import Footer from './Footer';
+import MobileContent from './MobileContent'
 
 class Navigation extends Component {
   constructor(props){
@@ -43,26 +45,24 @@ class Navigation extends Component {
 
   openMobile() {
     let pageScrollTop = window.scrollY;
-
+    let nameOfPage = this.props.nameOfPage;
+    if (nameOfPage ===": commercial") {
+      this.setState({commState: "shown"})
+    } else if (nameOfPage === ": faces")  {
+      this.setState({faceState: "shown"})
+    } else if (nameOfPage === ": editorial") {
+      this.setState({editState: "shown"})
+    }
     if(this.state.mobileOpen === "hidden") {
-      this.setState({
-        mobileOpen: "showNav",
-        mobIsOpen: 'mobOpen'
-      })
-
+      this.setState({ mobileOpen: "showNav", mobIsOpen: 'mobOpen'})
       document.querySelector('body').classList.add('fix-background');
-      this.setState({
-        topPos: pageScrollTop
-      })
+      this.setState({topPos: pageScrollTop })
+
     } else {
-      this.setState({
-        mobileOpen: "hidden",
-        mobIsOpen: 'closed'
-      })
+      this.setState({ mobileOpen: "hidden", mobIsOpen: 'closed'})
       document.querySelector('body').classList.remove('fix-background');
       window.scrollTo(0, this.state.topPos);
     }
-
   }
 
 
@@ -72,61 +72,54 @@ class Navigation extends Component {
     let morePosts = this.props.scrollToPoint;
 
     if (scrollPos > scrollHeight - 60) {
-      this.setState({
-        navColor: "black"
-      })
+      this.setState({ navColor: "black" })
     } else if (scrollPos < scrollHeight - 60) {
-      this.setState({
-        navColor: "white"
-      })
+      this.setState({ navColor: "white" })
     }
 
     if (scrollPos > morePosts) {
-      this.setState({
-        nameOfPage: this.props.postClass
+      this.setState({ nameOfPage: this.props.postClass
       })
     } else if (scrollPos < morePosts) {
-      this.setState({
-        nameOfPage: this.props.nameOfPage
-      })
+      this.setState({ nameOfPage: this.props.nameOfPage })
     }
-
   }
 
-  toggleFace(){
+  toggleFace(event){
     if(this.state.faceState === "hidden") {
       this.setState({
         faceState: "shown",
       })
+      event.target.innerHTML = "close list";
     } else {
       this.setState({
         faceState: "hidden",
       })
+      event.target.innerHTML = "view list";
+
     }
   }
 
-  toggleComm(){
+  toggleComm(event){
 
     if(this.state.commState === "hidden") {
-      this.setState({
-        commState: "shown",
-      })
+      this.setState({commState: "shown"})
+      event.target.innerHTML = "close list";
     } else {
-      this.setState({
-        commState: "hidden",
-      })
+      this.setState({commState: "hidden"  })
+      event.target.innerHTML = "view list";
+
     }
   }
 
-  toggleEditorial(){
+  toggleEditorial(event){
     if(this.state.editState === "hidden") {
-      this.setState({
-        editState: "shown",
-      })
+      this.setState({editState: "shown"})
+      event.target.innerHTML = "close list";
     } else {
-      this.setState({
-        editState: "hidden",
-      })
+      this.setState({editState: "hidden"})
+      event.target.innerHTML = "view list";
+
     }
   }
 
@@ -201,47 +194,32 @@ class Navigation extends Component {
       }
 
 
-        let contactInfo;
-        let email;
-        let instagram;
-        let phone;
+      let  contactInfo, email, instagram, phone;
+      let contactObj = {
+        contactInfo, email, instagram, phone
+      }
        if (this.props.contactMobile === undefined) {
-           contactInfo = '';
-           email  = "";
-           instagram = "";
-           phone = "";
+           contactObj.contactInfo = ''; contactObj.email  = ""; contactObj.instagram = ""; contactObj.phone = "";
        }else {
-           contactInfo = this.props.contactMobile[0].fields.entry;
-           email  = this.props.contactMobile[0].fields.email;
-           instagram = this.props.contactMobile[0].fields.instagram;
-           phone = this.props.contactMobile[0].fields.phoneNumber;
+           contactObj.contactInfo = this.props.contactMobile[0].fields.entry;
+           contactObj.email  = this.props.contactMobile[0].fields.email;
+           contactObj.instagram = this.props.contactMobile[0].fields.instagram;
+           contactObj.phone = this.props.contactMobile[0].fields.phoneNumber;
 
        }
 
     return (
       <header className={this.state.navColor + " nav-header"}>
         <nav id="left-navigation" className="desktop">
-          <Link
-            onMouseOver={this.fadeOut}
-            onMouseLeave = {this.fadeBack}
-            id='face'
-            to='/faces'>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='face' to='/faces'>
               Faces
-            </Link>
-          <Link
-            onMouseOver={this.fadeOut}
-            onMouseLeave = {this.fadeBack}
-            id='comm'
-            to='/commercial'>
+          </Link>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='comm' to='/commercial'>
               Commerical
-            </Link>
-          <Link
-            onMouseOver={this.fadeOut}
-            onMouseLeave = {this.fadeBack}
-            id='edit'
-            to='/editorial'>
+          </Link>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='edit' to='/editorial'>
               Editorial
-            </Link>
+          </Link>
         </nav>
         <nav id="middle-navigation" className="desktop">
           <h1><Link to='/'><img src={logo} alt="Arielle Berman" /> </Link></h1>
@@ -263,39 +241,36 @@ class Navigation extends Component {
         </nav>
         <div className={"mobile " + this.state.mobileOpen}>
           <div>
-          <Link onClick={this.state.removeFixed} id='face' to='/faces'>Faces</Link>
+           <Link onClick={this.state.removeFixed} id='face' to='/faces'>Faces</Link>
             <ul id="facesList" className={this.state.faceState}>
               {faceTitles}
             </ul>
             <small onClick={this.toggleFace}>View List</small>
-          <Link onClick={this.state.removeFixed} id='comm' to='/commercial'>Commerical</Link>
-            <ul id="commericalList" className={this.state.commState}>
-              {commercialTitles}
-            </ul>
+            <Link onClick={this.state.removeFixed} id='comm' to='/commercial'>Commerical</Link>
+              <ul id="commericalList" className={this.state.commState}>
+                {commercialTitles}
+              </ul>
             <small onClick={this.toggleComm}>View List</small>
           <Link onClick={this.state.removeFixed} id='edit' to='/editorial'>Editorial</Link>
             <ul id="editorialList" className={this.state.editState}>
               {editorialTitles}
             </ul>
             <small onClick={this.toggleEditorial}>View List</small>
-            <div className="mobile-content">
-              <h3> Contact </h3>
-              <p>{contactInfo}</p>
-              <p>{email}</p>
-              <p>{instagram}</p>
-              <p>{phone}</p>
-            </div>
+            <MobileContent mobileContact={contactObj}/>
             <h3>Newsletter</h3>
             <div className="newsletter">
               <p className={this.state.showMessage}>Thank you for your subscribing. </p>
               <input className={`${this.state.showIn} ${this.state.error}`} onChange={this.handleChange} placeholder="Email Address" value={this.state.value} type="email" name=""  />
               <input className={this.state.showIn} onClick={this.updateMessage} type="submit" placeholder="submit"  value="Sign Up"/></div>
           </div>
+            <Footer />
         </div>
+
       </header>
 
     );
   }
+
 }
 
 export default Navigation;

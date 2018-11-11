@@ -15,7 +15,11 @@ class GridwithSideBar extends Component {
 
     return (
       <div className={`App ${this.props.className}`} id="faces">
-            <Navigation contactMobile={this.props.contactMobile} titleContent={this.props.titleContent} nameOfPage={`: ${this.props.className}`}/>
+            <Navigation
+                        contactMobile={this.props.contactMobile}
+                        titleContent={this.props.titleContent}
+                        nameOfPage={`: ${this.props.className}`}
+            />
           <section>
             <Sidebar num="1" theTitles={this.props.gridContents}/>
             <Homegrid theContent={this.props.gridContents} />

@@ -1,42 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Link} from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import Credits from './Credits';
 import Creditsmob from './Mobilecred';
 import {
   CSSTransitionGroup,
   TransitionGroup,
 } from 'react-transition-group';
-import uuid from 'uuid';
-
 
 class SliderNew extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-
-    };
-  }
-
-  componentDidUpdate() {
-
-  }
-
-
   render() {
-    let activeClass = (this.props.activeSlide === "one") ? (activeClass = 1) : (this.props.activeSlide === "two") ? (activeClass = 2) : (this.props.activeSlide === "three") ? (activeClass = 3) : (activeClass = 0);
-    const items = this.props.theContent.map(function(name,index){
+    const next = this.props.theContent.map((name,index) =>{
       if (index < 4 && index === this.props.counter) {
         return (
           <div
             key={`${name.sys.id}`}
             style={{backgroundImage: 'url('+name.fields.banner.fields.file.url+')'}}></div>
         )
+      } else {
+        return null;
       }
     },this)
 
-    const previous = this.props.theContent.map(function(name,index){
+    const previous = this.props.theContent.map((name,index) =>{
       if (index < 4 && index === this.props.previousSlide) {
         return (
           <div
@@ -44,54 +29,50 @@ class SliderNew extends Component {
             style={{backgroundImage: 'url('+name.fields.banner.fields.file.url+')'}}></div>
         )
       }
+      else {
+        return null;
+      }
     },this)
 
     return (
       <section className="slider">
-
-           <CSSTransitionGroup
-              className='previous'
-              transitionName="previous"
-              transitionEnterTimeout={200}
-              transitionLeaveTimeout={4000}
-              transitionAppear={false}>
-              {previous}
-          </CSSTransitionGroup>
+         <CSSTransitionGroup
+            className='previous'
+            transitionName="example"
+            transitionEnterTimeout={1000}
+            transitionLeaveTimeout={1000}
+            transitionAppear={false}
+            style={{zIndex: this.props.zIndexPrev}}
+          >
+            {previous}
+        </CSSTransitionGroup>
         <CSSTransitionGroup
           className='next'
            transitionName="example"
            transitionEnterTimeout={1000}
-           transitionLeaveTimeout={1000}t
+           transitionLeaveTimeout={1000}
            transitionAppear={false}
-           >
-           {items}
+           style={{zIndex: this.props.zIndexNext}}
+          >
+           {next}
        </CSSTransitionGroup>
-
         <nav>
-          {this.props.theContent.map(function(name,index){
-            if (index < 4) {
-              return (
-                <Credits
-                  key={`${name.sys.id}`}
-                  dataNum={index}
-                  mouseOnCredit={this.props.hoverCredit}
-                  onLeaveCredit={this.props.mouseLeave}
-                  creditText={name} />
-              )
-            }
+          {this.props.theContent.map((name,index) =>{ if (index < 4) {
+              return ( <Credits key={`${name.sys.id}`} dataNum={index} mouseOnCredit={this.props.hoverCredit} onLeaveCredit={this.props.mouseLeave} creditText={name} />
+              )}
+              else { return null; }
           }, this)}
+
           <div className="mobile">
-            {this.props.theContent.map(function(name,index){
-              if (index < 4) {
+            {this.props.theContent.map(function(name,index){ if (index < 4 && index === this.props.counter ||  index < 4 && index === this.props.previousSlide) {
                 return (
-                  <Creditsmob
-                    key={`${name.sys.id}`}
-                    dataNum={index}
+                  <Creditsmob key={`${name.sys.id}`}
+                    dataNum={this.props.numericalNum}
                     mouseOnCredit={this.props.hoverCredit}
-                    creditText={name}
+                    creditText={this.props.theContent[this.props.counter]}
                     mobileSlider={this.props.mobileSlider}/>
-                )
-              }
+                )}
+                else { return null; }
             }, this)}
 
           </div>

@@ -23,7 +23,6 @@ class Post extends Component {
   componentWillMount() {
       window.scrollTo(0, 0);
       document.querySelector('body').classList.remove('fix-background');
-
       // get scrolltop of more
   }
   componentDidMount() {
@@ -32,45 +31,30 @@ class Post extends Component {
       let relatedContent = this.props.relatedContent.filter(function(res){
         return res.fields.tag === thePostClass;
       });
-      this.setState({
-        postRelatedContent: relatedContent
-      })
-
+      this.setState({postRelatedContent: relatedContent})
     }
+
     const height = this.divElement.offsetTop;
     this.setState({ height });
 
     if (this.state.limit >= this.state.postContent.length) {
-      this.setState({
-          loadMore: 'hidden'
-      });
+      this.setState({loadMore: 'hidden'});
     }
   }
 
   onLoadMore(e) {
     e.preventDefault();
-
     if (this.state.limit + 3 >= this.state.postContent.length) {
-      this.setState({
-          loadMore: 'hidden'
-      });
+      this.setState({loadMore: 'hidden' })
     }
-
     // update the limit for the load more function
-    this.setState({
-        limit: this.state.limit + 3
-    });
+    this.setState({limit: this.state.limit + 3});
 
   }
 
 
   render() {
-    let postGrid;
-    let postGridDesktop;
-    let postGridMobile;
-    let verticalBanner;
-    let headerSection;
-    let theVideoElement;
+    let postGrid, postGridDesktop, postGridMobile, verticalBanner, headerSection, theVideoElement;
     // if there is no post content return
     if(this.state.postContent.length <=0) {
       postGrid = "nothing here";
@@ -159,11 +143,11 @@ class Post extends Component {
             </section>
           </section>
           <section
-            className="more-posts" 
-            id={this.state.height} 
+            className="more-posts"
+            id={this.state.height}
             ref={ (divElement) => this.divElement = divElement}>
-            <Sidebar num="1" theTitles={this.state.postRelatedContent}/>
-            <Homegrid theContent={this.state.postRelatedContent} />
+              <Sidebar num="1" theTitles={this.state.postRelatedContent}/>
+              <Homegrid theContent={this.state.postRelatedContent} />
           </section>
         <Footer />
       </div>

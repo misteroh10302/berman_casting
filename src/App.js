@@ -4,8 +4,6 @@ import './App.css';
 import Footer from './Footer.js';
 import SliderNew from './SliderNew.js';
 import Homegrid from './Homegrid.js';
-import { CSSTransitionGroup } from 'react-transition-group' // ES6
-
 
 class App extends Component {
   constructor(props){
@@ -16,7 +14,12 @@ class App extends Component {
       currentSlide: 'zero',
       zIndex: 1,
       counter: 0,
-      previousSlide: 0
+      previousSlide: 0,
+      titleContent: null,
+      slideTracker: true,
+      zIndexNext: 1,
+      zIndexPrev: 0,
+      numericalNum: 0
     }
     this.onScrollLock = this.onScrollLock.bind(this);
     this.hoverCredit = this.hoverCredit.bind(this);
@@ -30,38 +33,72 @@ class App extends Component {
       window.addEventListener('scroll',this.onScrollLock);
   }
 
-  componentDidMount() {
-  }
-
   mobileSlider(logo, credit, text, activeNum, direction){
     let theCurrentSlide = this.state.currentSlide;
-
+    let numericalNum, previousSlide;
     if( direction === "next") {
       if (theCurrentSlide === 1  || theCurrentSlide === "one") {
-        activeNum = "two"
+        activeNum = "two";
+        numericalNum = 2;
+        previousSlide = 1;
       } else if (theCurrentSlide === 2 || theCurrentSlide === "two") {
-        activeNum = "three"
+        activeNum = "three";
+        numericalNum = 3;
+        previousSlide = 2;
       } else if ( theCurrentSlide === 3  || theCurrentSlide === "three") {
         activeNum = "zero";
+        numericalNum = 0;
+        previousSlide = 3;
       } else {
-        activeNum = "one"
+        activeNum = "one";
+        numericalNum = 1;
+        previousSlide = 0;
       }
     } else if (direction === "prev") {
       if (theCurrentSlide === 1  || theCurrentSlide === "one") {
-        activeNum = "zero"
+        activeNum = "zero";
+        numericalNum = 0;
+        previousSlide = 1;
       } else if (theCurrentSlide === 2 || theCurrentSlide === "two") {
-        activeNum = "one"
+        activeNum = "one";
+        numericalNum = 1;
+        previousSlide = 2;
       } else if ( theCurrentSlide === 3  || theCurrentSlide === "three") {
         activeNum = "two";
+        numericalNum = 2;
+        previousSlide = 3;
       } else {
-        activeNum = "three"
+        activeNum = "three";
+        numericalNum = 3;
+        previousSlide = 0;
       }
     }
 
-
-    this.setState({
-      currentSlide: activeNum
+    if (this.state.slideTracker === true) {
+      this.setState({
+               numericalNum: numericalNum,
+        currentSlide: activeNum,
+        counter: numericalNum,
+        slideTracker: false,
+        zIndexPrev: 0,
+        zIndexNext: 1
+     })
+   } else {
+     this.setState({
+       numericalNum: numericalNum,
+      currentSlide: activeNum,
+      previousSlide: numericalNum,
+      slideTracker: true,
+      zIndexPrev: 1,
+      zIndexNext: 0
     })
+
+   }
+    // this.setState({
+    //   currentSlide: activeNum,
+    //   counter: numericalNum,
+    //   previousSlide
+    // })
   }
 
   hoverCredit(logo, credit, text, activeNum) {
@@ -72,10 +109,9 @@ class App extends Component {
   }
 
   leaveCredit(slideNumber)  {
-    console.log(this.state.counter,slideNumber)
-    this.setState({
-      previousSlide: slideNumber
-    })
+    // this.setState({
+    //   previousSlide: slideNumber
+    // })
   }
 
   call(activeNum) {
@@ -90,19 +126,32 @@ class App extends Component {
       activeNum = "zero"
     }
 
-    this.setState({
+    if (this.state.slideTracker === true) {
+      this.setState({
+        currentSlide: activeNum,
+        counter: numericalNum,
+        slideTracker: false,
+        zIndexPrev: 0,
+        zIndexNext: 1
+     })
+   } else {
+     this.setState({
       currentSlide: activeNum,
-      counter: numericalNum
+      previousSlide: numericalNum,
+      slideTracker: true,
+      zIndexPrev: 1,
+      zIndexNext: 0
     })
+
+   }
+
   }
 
   onScrollLock() {
     let scrollHeight = window.innerHeight;
     let scrollPos = window.scrollY;
     if (scrollPos > scrollHeight && (this.state.scrollLock === "lock__off")) {
-      this.setState({
-        scrollLock: "lock__on"
-      })
+      this.setState({ scrollLock: "lock__on" })
       window.scrollTo(0, 0);
     }
   }
@@ -134,11 +183,13 @@ class App extends Component {
                 hoverCredit={this.hoverCredit}
                 theContent={this.props.gridContents}
                 counter={this.state.counter}
+                numericalNum={this.state.numericalNum}
                 previousSlide={this.state.previousSlide}
                 mobileSlider={this.mobileSlider}
                 mouseLeave={this.leaveCredit}
                 activeSlide={this.state.currentSlide}
-                zIndex={this.state.zIndex}
+                zIndexNext={this.state.zIndexNext}
+                zIndexPrev={this.state.zIndexPrev}
               />
 
         </header>

@@ -5,9 +5,7 @@ import Navigation from './Nav';
 
 
 class Contact extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       conInfo: [],
       myname: "madeline",
       value: "",
@@ -15,32 +13,30 @@ class Contact extends Component {
       showMessage: "hidden",
       error: "no-error"
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.updateMessage = this.updateMessage.bind(this);
+
+    handleChange = this.handleChange.bind(this);
+    updateMessage = this.updateMessage.bind(this);
+
+  static defaultProps = {
+    gridContents: []
   }
+
   componentDidMount(){
-    this.setState({
-      conInfo: this.props.gridContents
-    })
+    this.setState({ conInfo: this.props.gridContents})
   }
 
   handleChange(event) {
-    console.log('hello');
-   this.setState({
-     value: event.target.value
-   });
+   this.setState({ value: event.target.value });
   }
 
   updateMessage() {
     if (!this.state.value.includes('@')){
-      this.setState({
-        error: "error"
-      });
+      this.setState({ error: "error" });
     } else {
       this.setState({
         showIn: "hidden",
         showMessage: "shown",
-          error: "no-error"
+        error: "no-error"
       });
     }
 
@@ -49,24 +45,17 @@ class Contact extends Component {
   render() {
     let contactInfo;
     // if there is no post content return
-    if(this.props.gridContents === undefined) {
-      contactInfo = "nothing here";
-
-    } else {
-       contactInfo = this.props.gridContents.map((reg,i) =>
+    contactInfo = this.props.gridContents.map((reg,i) =>
             <div className="contact-main">
                 <div className="description">{reg.fields.entry}</div>
                 <div>
-                  <h3>Email</h3>
-                  <a href="">{reg.fields.email}</a>
+                  <h3>Email</h3> <a href="">{reg.fields.email}</a>
                 </div>
                 <div>
-                  <h3>Instagram</h3>
-                  <a href="">{reg.fields.instagram}</a>
+                  <h3>Instagram</h3> <a href="">{reg.fields.instagram}</a>
                 </div>
                 <div>
-                  <h3>Phone</h3>
-                  <a href="">{reg.fields.phoneNumber}</a>
+                  <h3>Phone</h3> <a href="">{reg.fields.phoneNumber}</a>
                 </div>
                 <div>
                   <h3>Newsletter</h3>
@@ -75,12 +64,10 @@ class Contact extends Component {
                   <input className={this.state.showIn} onClick={this.updateMessage} type="submit" placeholder="Sign Up"  value="Sign Up"/>
                 </div>
             </div>
-          )
-    }
+    )
 
     return (
       <div className="App contact">
-
         <Navigation contactMobile={this.props.contactMobile} titleContent={this.props.titleContent}/>
         <main>
           <div>{contactInfo}</div>

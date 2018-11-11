@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Link} from 'react-router-dom'
-
-
 // Import contentful
 var contentful = require('contentful')
 
 class Footer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       value: "",
       showIn: "shown",
       showMessage: "hidden",
@@ -18,12 +14,12 @@ class Footer extends Component {
       newsState: 'hidden',
       newsButton: "shown"
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.updateMessage = this.updateMessage.bind(this);
-    this.showNews = this.showNews.bind(this);
-    this.updateFooter = this.updateFooter.bind(this);
 
-  }
+    handleChange = this.handleChange.bind(this);
+    updateMessage = this.updateMessage.bind(this);
+    showNews = this.showNews.bind(this);
+    updateFooter = this.updateFooter.bind(this);
+
 
   componentWillMount() {
     var client = contentful.createClient({
@@ -31,14 +27,11 @@ class Footer extends Component {
       accessToken: '635d0733430094c3ee8ed1a81dab920236052730f153dbc4eede999809128662'
     });
     // Get the contact page
-    client.getEntries({ content_type: 'contact'
-    }).then(function(res){
-      var contactContent = res.items
-      this.setState({
-         contactContent: contactContent
+    client.getEntries({ content_type: 'contact'})
+      .then((res) => {
+        var contactContent = res.items
+        this.setState({contactContent});
        });
-     }.bind(this));
-
   }
 
   componentDidMount() {
@@ -56,7 +49,7 @@ class Footer extends Component {
     if(this.a === null) {
       return;
     } else {
-      if (window.innerWidth < 1075) {
+      if (window.innerWidth < 1120) {
         this.a.innerText = "EMAIL";
         this.insta.innerText = "INSTAGRAM";
         this.phone.innerText = "PHONE";
@@ -70,11 +63,7 @@ class Footer extends Component {
   }
 
   showNews() {
-    this.setState({
-      newsState: "shown",
-      newsButton: "hidden"
-    })
-
+    this.setState({newsState: "shown",newsButton: "hidden"})
   }
 
   updateMessage() {

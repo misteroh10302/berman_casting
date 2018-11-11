@@ -42,6 +42,10 @@ h1 {
 text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
 }
 
+.white > * {
+  text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
+}
+
 .lock__on .white.nav-header #middle-navigation a {
     background-image: url(/static/media/berman.b3e631af.svg);
     background-size: contain;
@@ -66,6 +70,11 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
   color: black;
 }
 
+.App-header[data-credit="Black"]   .slider nav div:hover small a{
+    color: black;
+    opacity: 1;
+}
+
 
 .App-header[data-text="Black"]  .nav-header a{
   color: black;
@@ -73,7 +82,7 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
 
 @keyframes transitionIn {
   0% {
-    transform: translateX(100vw);
+    transform: translateX(0vw);
   }
   100% {
     transform: translateX(0vw);
@@ -81,6 +90,29 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
 }
 .App-header .slider .mobile {
   width: 100%;
+}
+
+.App-header .slider .mobile span:nth-child(2){
+  display: none !important;
+}
+
+.mobile footer {
+    padding: 25px 0 0;
+    border-top: 0px solid rgba(0,0,0,0.5);
+}
+
+.mobile #footer-right a {
+  font-size: 11px;
+  display: inline-block;
+}
+
+.mobile #footer-right a:hover {
+  opacity: 0.5;
+}
+
+.mobile #footer-right #sig {
+  margin: 10px auto 0;
+  opacity: 0.35;
 }
 
 
@@ -99,9 +131,11 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
 .App-header.three .slider nav .mobile span:nth-child(2) {
   display: block;
 }
-.App-header .slider> span > div {
+.App-header .slider > span > div {
   height: 100vh;
   width: 100vw;
+  background-size: cover;
+  background-position: center;
 }
 .App-header.zero .slider > div:nth-child(1){
   z-index: 3 !important;
@@ -251,24 +285,24 @@ section a {
 
 
 
-.commercial #left-navigation a#face, .commercial #edit, .commercial a#contact {
+.commercial #left-navigation a#face, .commercial a#face, .commercial #edit, .commercial a#contact {
   opacity: 0.5;
   transition: 0.25 ease;
 }
-.commercial #left-navigation a#face:hover, .commercial a#edit:hover, .commercial a#contact:hover  {
+.commercial #left-navigation a#face:hover, .commercial  a#face:hover, .commercial a#edit:hover, .commercial a#contact:hover  {
   opacity: 1;
 }
 
 
-.faces #left-navigation a#edit, .faces a#comm, .faces a#contact {
+.faces #left-navigation a#edit, .faces a#comm, .faces a#contact, .faces  a#edit {
   opacity: 0.5;
   transition: 0.25 ease;
 }
-.faces #left-navigation a#edit:hover, .faces a#comm:hover, .faces a#contact:hover  {
+.faces #left-navigation a#edit:hover, .faces  a#edit:hover, .faces a#comm:hover, .faces a#contact:hover  {
   opacity: 1;
 }
 
-.editorial #left-navigation a#face, .editorial a#comm, .editorial a#contact {
+.editorial #left-navigation a#face, .editorial  a#face, .editorial a#comm, .editorial a#contact {
   opacity: 0.5;
   transition: 0.25 ease;
 }
@@ -500,17 +534,17 @@ footer #sig {
 }
 
 .home-grid .vertical-image a > div:first-child,.post-grid .vertical-image div > div {
-  padding-top: 150%;
+  padding-top:  80vh;
   height: auto;
 }
 
 .home-grid .horizontal-image a > div:first-child,.post-grid .horizontal-image div > div {
-  padding-top: 80%;
+  padding-top: 80vh;
   height: auto;
 }
 
 .more-posts .home-grid div a > div:first-child {
-  padding-top: 150%;
+  padding-top:  80vh;
   /* height: auto; */
 }
 
@@ -832,6 +866,34 @@ section a:visited {
 .view__more {
   display: none;
 }
+@media screen and (max-width: 1120px) {
+  #footer-left {
+        display: none;
+
+  }
+  #footer-right {
+      text-align: center;
+      width: 100%;
+  }
+  #footer-right a {
+      margin: 0 5px;
+  }
+  #footer-right #sig {
+      opacity: 0.5;
+      margin-top: 10px;
+      display: block;
+
+  }
+
+
+}
+@media screen and (max-width: 786px), (max-height: 680px)  {
+  .home-grid .vertical-image a > div:first-child, .post-grid .vertical-image div > div {
+      padding-top: 45vw;
+      height: auto;
+  }
+}
+
 @media screen and (max-width: 786px) {
   .desktop {
     display: none;
@@ -959,6 +1021,13 @@ section a:visited {
   }
   .slider nav div small  a {
     color:black;
+  }
+  .slider nav div small  a:hover {
+    color:black;
+  }
+
+  .App-header[data-credit="Black"] .slider nav  small  a:hover {
+    color: black;
   }
   .isMobile .slider nav{
       top: calc(100vh - 230px);
@@ -1316,6 +1385,7 @@ section a:visited {
 .previous , .next {
   position: absolute;
 }
+
 .previous > div {
   position: relative;
   z-index: 2;
@@ -1332,7 +1402,7 @@ section a:visited {
  .example-enter.example-enter-active {
    opacity: 1;
     transform: translateX(0vw);
-   transition: all 500ms ease-in;
+   transition: all 1000ms ease-in;
  }
 
 .example-leave {
@@ -1343,7 +1413,7 @@ section a:visited {
 .example-leave.example-leave-active {
    opacity: 1;
     transform: translateX(0vw);
-   transition: all 500ms ease-in;
+   transition: all 1000ms ease-in;
  }
 
    .previous-enter {
