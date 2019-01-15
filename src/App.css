@@ -17,17 +17,17 @@
 }
 @font-face {
   font-family: 'Lulo Clean';
-  src: url('lulo.otf');
+  src: url('Assets/lulo.otf');
 }
 
 @font-face {
   font-family: 'Adobe Caslon Pro';
-  src: url('ACaslonPro-Regular.otf');
+  src: url('Assets/ACaslonPro-Regular.otf');
 }
 
 @font-face {
   font-family: 'BC';
-  src: url('bc-reformulate-light.otf');
+  src: url('Assets/bc-reformulate-light.otf');
 }
 body {
   font-family: 'BC', sans-serif;
@@ -264,27 +264,27 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
   top: -2px;
 }
 .nav-header #middle-navigation a {
-  background-image: url(berman_white.svg);
+  background-image: url(Assets/berman_white.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 .black.nav-header #middle-navigation a {
-  background-image: url(berman.svg);
+  background-image: url(Assets/berman.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 #faces .nav-header #middle-navigation a , .contact .nav-header #middle-navigation a {
-  background-image: url(berman.svg);
+  background-image: url(Assets/berman.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .nav-header .mobOpen #middle-navigation a {
-  background-image: url(berman.svg);
+  background-image: url(Assets/berman.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -585,6 +585,7 @@ footer #sig:hover {
 
 #post .slider {
   background-color: #eee;
+  background-size: cover;
 }
 #post .loadMore {
   display: none;

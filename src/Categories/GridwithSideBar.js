@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Navigation from './Nav';
-import './App.css';
-import Footer from './Footer';
-import Homegrid from './Homegrid';
-import Sidebar from './Sidebar';
+import Navigation from '../Nav';
+import '../App.css';
+import Footer from '../Footer/Footer';
+import Homegrid from '../Homepage/Homegrid';
+import Sidebar from '../Sidebar';
 
 class GridwithSideBar extends Component {
   componentWillMount() {

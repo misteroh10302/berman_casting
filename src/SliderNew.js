@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Credits from './Credits';
-import Creditsmob from './Mobilecred';
+import Credits from './Homepage/Credits';
+import Creditsmob from './Homepage/Mobilecred';
 import {
   CSSTransitionGroup,
   TransitionGroup,

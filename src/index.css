@@ -89,7 +89,7 @@ section, footer {
   color: white;
   width: 100vw;
   height: auto;
-  top: 87vh;
+  bottom: 30px;
   display: flex;
   justify-content: space-between;
     cursor: pointer;

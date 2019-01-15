@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Link} from 'react-router-dom'
-import logo from './berman.png';
-import Footer from './Footer';
-import MobileContent from './MobileContent'
+import logo from './Assets/berman.png';
+import Footer from './Footer/Footer';
+import MobileContent from './Contact/MobileContent'
+import { generateKey,removeSpacing } from './utils/utils.js'
 
 class Navigation extends Component {
   constructor(props){
@@ -40,7 +41,7 @@ class Navigation extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll',this.onScrollColor, false);
+    // window.removeEventListener('scroll',this.onScrollColor, false);
   }
 
   openMobile() {
@@ -176,19 +177,19 @@ class Navigation extends Component {
       if (this.props.titleContent !== undefined ) {
         faceTitles = this.props.titleContent.map(function(reg,i) {
            if (reg.fields.tag ==="faces") {
-             return <li>   <Link key={i} to={'/'+reg.fields.title}> {reg.fields.title}</Link></li>;
+             return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
            }
         })
 
        commercialTitles = this.props.titleContent.map(function(reg,i) {
           if (reg.fields.tag ==="commercial") {
-            return <li>   <Link key={i} to={'/'+reg.fields.title}> {reg.fields.title}</Link></li>;
+            return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
           }
        })
 
         editorialTitles = this.props.titleContent.map(function(reg,i) {
            if (reg.fields.tag ==="editorial") {
-             return <li>   <Link key={i} to={'/'+reg.fields.title}> {reg.fields.title}</Link></li>;
+             return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
            }
         })
       }

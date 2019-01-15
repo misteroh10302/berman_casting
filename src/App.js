@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Navigation from './Nav';
 import './App.css';
-import Footer from './Footer.js';
+import Footer from './Footer/Footer.js';
 import SliderNew from './SliderNew.js';
-import Homegrid from './Homegrid.js';
-import SliderHome from './SliderHome.js';
+import Homegrid from './Homepage/Homegrid.js';
+import SliderHome from './Homepage/SliderHome.js';
 
 
 class App extends Component {

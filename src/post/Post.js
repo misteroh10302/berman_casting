@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Footer from './Footer';
-import Navigation from './Nav';
-import Homegrid from './Homegrid';
-import Sidebar from './Sidebar';
-import './App.css';
+import Footer from '../Footer/Footer';
+import Navigation from '../Nav';
+import Homegrid from '../Homepage/Homegrid';
+import Sidebar from '../Sidebar';
+import '../App.css';
 import ReactMarkdown from 'react-markdown';
 
 class Post extends Component {
@@ -27,10 +27,8 @@ class Post extends Component {
   }
   componentDidMount() {
     let thePostClass = this.state.postClass;
-    if(this.props.relatedContent) {
-      let relatedContent = this.props.relatedContent.filter(function(res){
-        return res.fields.tag === thePostClass;
-      });
+    if (this.props.relatedContent) {
+      let relatedContent = this.props.relatedContent.filter((res) =>  res.fields.tag === thePostClass);
       this.setState({postRelatedContent: relatedContent})
     }
 
@@ -58,8 +56,8 @@ class Post extends Component {
     headerSection = <section className="loading">Loading</section>;
     // if there is no post content return
     if(this.state.postContent.length <=0) {
-      postGrid = "nothing here";
-      return postGrid;
+      // postGrid = "nothing here";
+      // return postGrid;
     } else {
        postGridMobile = this.state.postContent.slice(0,this.state.limit).map(function(reg,i) {
             let imageClass = i;
@@ -81,7 +79,7 @@ class Post extends Component {
             }
 
       })
-
+      // Something about the way this is rendering is making it run slow...
       postGridDesktop = this.state.postContent.map(function(reg,i) {
            let imageClass;
            if (reg.fields.file.url.includes('mov') || reg.fields.file.url.includes('mp4')) {
@@ -150,7 +148,7 @@ class Post extends Component {
         </div>
           <section className="main">
             <section className="post-grid">
-              {postGridDesktop}
+              {/* {postGridDesktop} */}
               {postGridMobile}
               <a href=""
                 className={`${this.state.loadMore} loadMore`}

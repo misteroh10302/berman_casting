@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import GridwithSideBar from './GridwithSideBar';
+import GridwithSideBar from './Categories/GridwithSideBar';
 import App from './App';
-import Contact from './Contact';
-import Post from './Post';
+import Contact from './Contact/Contact';
+import Post from './post/Post';
 import NotFound from './NotFound';
 import './App.css';
-import {BrowserRouter, Route, Switch, HashRouter } from 'react-router-dom'
+import {BrowserRouter, Route, Switch } from 'react-router-dom'
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import { generateKey,removeSpacing } from './utils/utils.js'
 
@@ -21,7 +21,6 @@ class RouterIndex extends Component {
       platform: ""
     }; // <- set up react state
 
-    this.replaceUrl = this.replaceUrl.bind(this)
   }
   componentWillMount(){
     var client = contentful.createClient({
@@ -38,28 +37,22 @@ class RouterIndex extends Component {
 
       let facesContent = content.filter((res) => res.fields.tag === "faces");
 
-      let commercialContent = content.filter(function(res){
-        return res.fields.tag === "commercial";
-      });
+      let commercialContent = content.filter((res) => res.fields.tag === "commercial");
 
-      let editorialContent = content.filter(function(res){
-        return res.fields.tag === "editorial";
-      });
+      let editorialContent = content.filter((res) =>  res.fields.tag === "editorial");
 
       let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
       iOS === true ? iOS = "isMobile" : iOS = "isDesktop";
-      var is_opera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
       let is_chrome = !!window.chrome;
 
       is_chrome === true ? is_chrome = "isMobileChrome" : "";
 
-
       this.setState({
-         contents: sortedContent,
+        //  contents: sortedContent,
          facesContent: facesContent,
-         commercialContent: commercialContent,
-         editorialContent: editorialContent,
+         commercialContent,
+         editorialContent,
          platform: iOS,
          chrome: ""
        });
@@ -68,27 +61,27 @@ class RouterIndex extends Component {
 
    // Get the contact page
    client.getEntries({ content_type: 'contact'
- }).then((res) => {
+      }).then((res) => {
      var contactContent = res.items
      this.setState({  contactContent });
-    });
+  });
+
+  client.getEntries({ content_type: 'homepagePosts'
+  }).then((res) => {
+      let homepage = res.items[0].fields['homepagePosts']
+      console.log(homepage)
+      this.setState({  contents: homepage });
+     });
 
   }
 
-   replaceUrl(str) {
-    str.replace(/\s/g, '-');
-    return str;
-  }
-  
-  isIos() {
 
-  }
 
   render() {
     let theRelatedContent = this.state.contents;
     let theContactContent = this.state.contactContent;
     const allMessages = this.state.contents.map(function(reg,i) {
-        return <Route key={i} path={`/${removeSpacing(reg.fields.title)}`} exact render={()=>
+        return <Route key={generateKey(i)} path={`/${removeSpacing(reg.fields.title)}`} exact render={()=>
           <Post postClassName={reg.fields.tag} relatedContent={theRelatedContent} titleContent={theRelatedContent} contactMobile={theContactContent}  postContent={reg}/>}/>;
       }
   )
