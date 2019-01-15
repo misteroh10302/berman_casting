@@ -5,6 +5,7 @@ import Homegrid from '../Homepage/Homegrid';
 import Sidebar from '../Categories/Sidebar';
 import '../App.css';
 import ReactMarkdown from 'react-markdown';
+import PostGrid from './PostGrid';
 
 class Post extends Component {
   constructor(props) {
@@ -26,21 +27,28 @@ class Post extends Component {
       // get scrolltop of more
   }
   componentDidMount() {
+    // There should only be on set State call here!
+    // Fix and update this
     let thePostClass = this.state.postClass;
+
+    // Getting the related content for the bottom of the Post
     if (this.props.relatedContent) {
       let relatedContent = this.props.relatedContent.filter((res) =>  res.fields.tag === thePostClass);
-      this.setState({postRelatedContent: relatedContent})
+      this.setState({postRelatedContent: relatedContent});
     }
 
+    // Get the height of the div element for the More Posts section
     const height = this.divElement.offsetTop;
     this.setState({ height });
 
+    // Load More Post
     if (this.state.limit >= this.state.postContent.length) {
       this.setState({loadMore: 'hidden'});
     }
   }
 
   onLoadMore(e) {
+    // There should be an else clause here.
     e.preventDefault();
     if (this.state.limit + 3 >= this.state.postContent.length) {
       this.setState({loadMore: 'hidden' })
@@ -52,6 +60,8 @@ class Post extends Component {
 
 
   render() {
+    // TO DO: Break Post Grids into Smaller Components
+    //        Break SLider Header into a Smaller Component
     let postGrid, postGridDesktop, postGridMobile, verticalBanner, headerSection, theVideoElement;
     headerSection = <section className="loading">Loading</section>;
     // if there is no post content return
@@ -59,49 +69,7 @@ class Post extends Component {
       // postGrid = "nothing here";
       // return postGrid;
     } else {
-       postGridMobile = this.state.postContent.slice(0,this.state.limit).map(function(reg,i) {
-            let imageClass = i;
-            if (reg.fields.file.url.includes('.mov') || reg.fields.file.url.includes('.mp4')) {
-              return (
-                <div key={i} className={`horizontal-image mobile`}>
-                  <video src={reg.fields.file.url} controls></video>
-               </div>
-              )
-            } else {
-              let imHeight = parseInt(reg.fields.file.details.image.height, 0);
-              let imWidth = parseInt(reg.fields.file.details.image.width, 0);
-              imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
-
-
-              return <div key={i} className={`${imageClass} mobile`}>
-                <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
-              </div>
-            }
-
-      })
-      // Something about the way this is rendering is making it run slow...
-      postGridDesktop = this.state.postContent.map(function(reg,i) {
-           let imageClass;
-           if (reg.fields.file.url.includes('mov') || reg.fields.file.url.includes('mp4')) {
-             return (
-               <div key={i} className={`horizontal-image desktop`}>
-                <video src={reg.fields.file.url} controls></video>
-              </div>
-             )
-           } else {
-             let imHeight = parseInt(reg.fields.file.details.image.height, 10);
-             let imWidth = parseInt(reg.fields.file.details.image.width, 10);
-             if(imHeight>imWidth) {
-                imageClass = "vertical-image";
-             } else {
-               imageClass = "horizontal-image";
-             }
-             return <div key={i} className={`${imageClass} desktop`}>
-               <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
-             </div>
-           }
-
-     })
+    
     }
 
 
@@ -147,13 +115,18 @@ class Post extends Component {
           <ReactMarkdown source={input} />
         </div>
           <section className="main">
-            <section className="post-grid">
-              {/* {postGridDesktop} */}
-              {postGridMobile}
-              <a href=""
+            {/* Must get the load more button to work here! */}
+            <PostGrid content={this.state.postContent} screenType={"desktop"}/>
+            <PostGrid content={this.state.postContent} screenType={"mobile"}/>
+
+            {/* <section className="post-grid"> */}
+              {/* <PostGrid content={this.state.postContent}/> */}
+              {/* {postGridDesktop}
+              {postGridMobile} */}
+              {/* <a href=""
                 className={`${this.state.loadMore} loadMore`}
-                onClick={this.onLoadMore}>LOAD MORE</a>
-            </section>
+                onClick={this.onLoadMore}>LOAD MORE</a> */}
+            {/* </section> */}
           </section>
           <section
             className="more-posts"
