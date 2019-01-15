@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Footer from '../Footer/Footer';
-import Navigation from '../Nav';
+import Navigation from '../Header/Nav';
 import Homegrid from '../Homepage/Homegrid';
-import Sidebar from '../Sidebar';
+import Sidebar from '../Categories/Sidebar';
 import '../App.css';
 import ReactMarkdown from 'react-markdown';
 

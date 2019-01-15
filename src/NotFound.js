@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Footer from './Footer/Footer.js';
-import Navigation from './Nav';
+import Navigation from './Header/Nav';
 import {Link} from 'react-router-dom'
 
 

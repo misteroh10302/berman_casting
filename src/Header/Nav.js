@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import {Link} from 'react-router-dom'
-import logo from './Assets/berman.png';
-import Footer from './Footer/Footer';
-import MobileContent from './Contact/MobileContent'
-import { generateKey,removeSpacing } from './utils/utils.js'
+import logo from '../Assets/berman.png';
+import Footer from '../Footer/Footer';
+import MobileContent from '../Contact/MobileContent'
+import { generateKey,removeSpacing } from '../utils/utils.js'
 
 class Navigation extends Component {
   constructor(props){

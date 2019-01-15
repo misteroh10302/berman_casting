@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GridwithSideBar from './Categories/GridwithSideBar';
-import App from './App';
+import App from './Homepage/App';
 import Contact from './Contact/Contact';
 import Post from './post/Post';
 import NotFound from './NotFound';
