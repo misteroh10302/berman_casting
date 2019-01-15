@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import './App.css';
 import ReactMarkdown from 'react-markdown';
+import { generateKey,removeSpacing } from './utils/utils.js'
 
 class Homegrid extends Component {
   constructor(props) {
@@ -38,7 +39,11 @@ class Homegrid extends Component {
 
   onLoadMore(e) {
     e.preventDefault();
-    this.state.limit + 3 >= this.props.theContent.length ? this.setState({ loadMore: 'hidden' }) : this.setState({ limit: this.state.limit + 3 });
+    // if the number counter is greater than the state
+    console.log(this.state.limit,this.props.theContent.length)
+    this.state.limit >= this.props.theContent.length ?  this.setState({
+      loadMore: 'hidden' }) : this.state.limit + 3 === this.props.theContent.length ?
+      this.setState({ limit: this.state.limit + 3,   loadMore: 'hidden'}) : this.setState({ limit: this.state.limit + 3}) ;
   }
 
 
@@ -52,10 +57,10 @@ class Homegrid extends Component {
         let imHeight = parseInt(reg.fields.thumbnail.fields.file.details.image.height, 10);
         let imWidth = parseInt(reg.fields.thumbnail.fields.file.details.image.width, 10);
         imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
-
+        console.log(reg.fields.thumbnail.fields.file.url);
          const input = reg.fields.postInformation;
-          return <div key={i} className={imageClass} onMouseOver={fadeImages} onMouseOut={fadeOut}>
-             <Link to={reg.fields.title}>
+          return <div key={`${reg.sys.id}`} className={imageClass} onMouseOver={fadeImages} onMouseOut={fadeOut}>
+             <Link to={removeSpacing(reg.fields.title)}>
                <div style={{backgroundImage: `url(${reg.fields.thumbnail.fields.file.url})`}} >
                </div>
                 <ReactMarkdown skipHtml source={input} />
@@ -65,10 +70,16 @@ class Homegrid extends Component {
          })
     } else {
       allGrid = this.props.theContent.map(function(reg,i) {
+          let imageClass = i;
+
+          let imHeight = parseInt(reg.fields.thumbnail.fields.file.details.image.height, 10);
+          let imWidth = parseInt(reg.fields.thumbnail.fields.file.details.image.width, 10);
+          imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
+          console.log(imageClass)
       const input = reg.fields.postInformation;
-          return <div >
-              <Link to={reg.fields.title}>
-                <div
+          return <div key={`${reg.sys.id}`}>
+              <Link  to={removeSpacing(reg.fields.title)}  >
+                <div className={imageClass}
                   style={{backgroundImage: `url(${reg.fields.thumbnail.fields.file.url})`}} >
                 </div>
                   <ReactMarkdown skipHtml source={input} />

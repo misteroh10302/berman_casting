@@ -55,6 +55,7 @@ class Post extends Component {
 
   render() {
     let postGrid, postGridDesktop, postGridMobile, verticalBanner, headerSection, theVideoElement;
+    headerSection = <section className="loading">Loading</section>;
     // if there is no post content return
     if(this.state.postContent.length <=0) {
       postGrid = "nothing here";
@@ -62,32 +63,46 @@ class Post extends Component {
     } else {
        postGridMobile = this.state.postContent.slice(0,this.state.limit).map(function(reg,i) {
             let imageClass = i;
-            let imHeight = parseInt(reg.fields.file.details.image.height, 0);
-            let imWidth = parseInt(reg.fields.file.details.image.width, 0);
-            if(imHeight>imWidth) {
-               imageClass = "vertical-image";
+            if (reg.fields.file.url.includes('.mov') || reg.fields.file.url.includes('.mp4')) {
+              return (
+                <div key={i} className={`horizontal-image mobile`}>
+                  <video src={reg.fields.file.url} controls></video>
+               </div>
+              )
             } else {
-              imageClass = "horizontal-image";
+              let imHeight = parseInt(reg.fields.file.details.image.height, 0);
+              let imWidth = parseInt(reg.fields.file.details.image.width, 0);
+              imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
+
+
+              return <div key={i} className={`${imageClass} mobile`}>
+                <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
+              </div>
             }
 
-            return <div key={i} className={`${imageClass} mobile`}>
-              <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
-            </div>
       })
 
       postGridDesktop = this.state.postContent.map(function(reg,i) {
-           let imageClass = i;
-           let imHeight = parseInt(reg.fields.file.details.image.height, 10);
-           let imWidth = parseInt(reg.fields.file.details.image.width, 10);
-           if(imHeight>imWidth) {
-              imageClass = "vertical-image";
+           let imageClass;
+           if (reg.fields.file.url.includes('mov') || reg.fields.file.url.includes('mp4')) {
+             return (
+               <div key={i} className={`horizontal-image desktop`}>
+                <video src={reg.fields.file.url} controls></video>
+              </div>
+             )
            } else {
-             imageClass = "horizontal-image";
+             let imHeight = parseInt(reg.fields.file.details.image.height, 10);
+             let imWidth = parseInt(reg.fields.file.details.image.width, 10);
+             if(imHeight>imWidth) {
+                imageClass = "vertical-image";
+             } else {
+               imageClass = "horizontal-image";
+             }
+             return <div key={i} className={`${imageClass} desktop`}>
+               <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
+             </div>
            }
 
-           return <div key={i} className={`${imageClass} desktop`}>
-             <div style={{backgroundImage: `url(${reg.fields.file.url})`}} ></div>
-           </div>
      })
     }
 
@@ -98,7 +113,7 @@ class Post extends Component {
     }
 
     // if the banner is a video
-    if (this.props.postContent.fields.banner.fields.file.details.image !== undefined) {
+    if (this.props.postContent.fields.banner && this.props.postContent.fields.banner.fields.file.details.image !== undefined) {
       // if the banner is vertical make the header nav have black and add a class
       if (this.props.postContent.fields.banner.fields.file.details.image.height > this.props.postContent.fields.banner.fields.file.details.image.width ) {
         verticalBanner = "verticalBanner"
@@ -106,9 +121,9 @@ class Post extends Component {
 
       headerSection =  <section style={{backgroundImage: 'url('+this.props.postContent.fields.banner.fields.file.url+')'}} className="slider"></section>;
 
-
-    } else {
+    } else if (this.props.postContent.fields.banner) {
       // if the image is actually a mov
+
       theVideoElement = this.props.postContent.fields.banner.fields.file.url;
       headerSection = <section style={{backgroundColo: 'whitesmoke'}} className="slider">
             <video width="320" height="240" autoPlay muted loop nocontrols>

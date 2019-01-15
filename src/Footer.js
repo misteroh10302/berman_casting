@@ -10,9 +10,23 @@ class Footer extends Component {
       showIn: "shown",
       showMessage: "hidden",
       error: "no-error",
-      contactContent:[],
+      contactContent:[
+        {
+          "fields": {
+            "email": '',
+            "instagram": '',
+            "phoneNumber": ''
+          }
+        }
+
+      ],
+      email: 'email',
+      instagram: 'instagram',
+      phone: '000-000-000',
+      emailMessage: 'I wanted to reach out to you.',
       newsState: 'hidden',
-      newsButton: "shown"
+      newsButton: "shown",
+
     }
 
     handleChange = this.handleChange.bind(this);
@@ -36,6 +50,7 @@ class Footer extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.updateFooter);
+    window.addEventListener('load', this.updateFooter);
 
   }
 
@@ -46,19 +61,27 @@ class Footer extends Component {
   }
 
   updateFooter() {
-    if(this.a === null) {
-      return;
-    } else {
+
       if (window.innerWidth < 1120) {
-        this.a.innerText = "EMAIL";
-        this.insta.innerText = "INSTAGRAM";
-        this.phone.innerText = "PHONE";
+        // this.a.innerText = "EMAIL";
+        // this.insta.innerText = "INSTAGRAM";
+        // this.phone.innerText = "PHONE";
+        this.setState({
+            email: 'EMAIL',
+            instagram:'INSTAGRAM',
+            phone: 'PHONE'
+        })
       } else {
-        this.a.innerText = this.state.contactContent[0].fields.email;
-        this.insta.innerText = this.state.contactContent[0].fields.instagram;
-        this.phone.innerText = this.state.contactContent[0].fields.phoneNumber;
+        this.setState({
+            email: this.state.contactContent[0].fields.email,
+            instagram:this.state.contactContent[0].fields.instagram,
+            phone: this.state.contactContent[0].fields.phoneNumber
+        })
+        // this.state.email = this.state.contactContent[0].fields.email;
+        // this.state.instagram = this.state.contactContent[0].fields.instagram;
+        // this.state.phone = this.state.contactContent[0].fields.phoneNumber;
       }
-    }
+
 
   }
 
@@ -105,7 +128,7 @@ class Footer extends Component {
             <button id="newslettter" className={`${this.state.newsButton}`} onClick={this.showNews}>Newsletter</button>
             <p
               className={this.state.showMessage}>
-                Thank you for your subscribing.
+                Thank you for subscribing.
             </p>
             <div className={` ${this.state.newsState} newsletter`}>
               <input
@@ -124,9 +147,9 @@ class Footer extends Component {
             </div>
           </nav>
           <nav id="footer-right">
-            <a href="" id="emailText" ref={(item) => {this.a = item}}>{userEmail}</a>
-            <a href="" id="instagram" ref={(item) => {this.insta = item}}>{userInstagram}</a>
-            <a href="" id="phone" ref={(item) => {this.phone = item}}>{userPhone}</a>
+            <a href={`mailto:arielleberman@gmail.com`} id="emailText" ref={(item) => {this.a = item}}>{this.state.email}</a>
+            <a target="_blank" href={`https://www.instagram.com/${userInstagram}`} id="instagram" ref={(item) => {this.insta = item}}>{this.state.instagram}</a>
+            <a  href={`tel:${this.state.phone}`} id="phone" ref={(item) => {this.phone = item}}>{this.state.phone}</a>
             <a href="" id="sig">&copy;	 2018 Arielle Berman</a>
           </nav>
       </footer>

@@ -49,13 +49,13 @@ class Contact extends Component {
             <div className="contact-main">
                 <div className="description">{reg.fields.entry}</div>
                 <div>
-                  <h3>Email</h3> <a href="">{reg.fields.email}</a>
+                  <h3>Email</h3> <a href={`mailto:${reg.fields.email}`}>{reg.fields.email}</a>
                 </div>
                 <div>
-                  <h3>Instagram</h3> <a href="">{reg.fields.instagram}</a>
+                  <h3>Instagram</h3> <a target="_blank" href={`https://www.instagram.com/${reg.fields.instagram}`}>{reg.fields.instagram}</a>
                 </div>
                 <div>
-                  <h3>Phone</h3> <a href="">{reg.fields.phoneNumber}</a>
+                  <h3>Phone</h3> <a href={`tel:${reg.fields.phoneNumber}`}>{reg.fields.phoneNumber}</a>
                 </div>
                 <div>
                   <h3>Newsletter</h3>

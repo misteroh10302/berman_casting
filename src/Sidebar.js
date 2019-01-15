@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './App.css';
 
 class Sidebar extends Component {
-  
+
   state = {
     number: this.props.num
   }
@@ -39,7 +39,7 @@ class Sidebar extends Component {
 
   render() {
     let allTitles = this.props.theTitles.map((reg,i) =>
-          <li onMouseOver={this.makeGray} onMouseOut={this.returnGray}>
+          <li onMouseOver={this.makeGray} key={`${reg.sys.id}`} onMouseOut={this.returnGray}>
             <Link to={'/'+reg.fields.title}>{reg.fields.title} </Link>
         </li>
     )

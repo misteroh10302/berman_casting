@@ -259,7 +259,7 @@ class Navigation extends Component {
             <MobileContent mobileContact={contactObj}/>
             <h3>Newsletter</h3>
             <div className="newsletter">
-              <p className={this.state.showMessage}>Thank you for your subscribing. </p>
+              <p className={this.state.showMessage}>Thank you for subscribing. </p>
               <input className={`${this.state.showIn} ${this.state.error}`} onChange={this.handleChange} placeholder="Email Address" value={this.state.value} type="email" name=""  />
               <input className={this.state.showIn} onClick={this.updateMessage} type="submit" placeholder="submit"  value="Sign Up"/></div>
           </div>

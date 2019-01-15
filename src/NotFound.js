@@ -18,6 +18,8 @@ class NotFound extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
   }
+
+
   componentDidMount(){
     this.setState({
       conInfo: this.props.gridContents
@@ -38,11 +40,19 @@ class NotFound extends Component {
   }
 
   render() {
-
+    let email, instagram, phone;
+    if (!this.props.contactMobile) {
+      email = "email"; instagram = 'instagram'; phone: 'phone';
+    } else {
+      email = this.props.contactMobile[0].fields.email
+      instagram = this.props.contactMobile[0].fields.instagram
+      phone = this.props.contactMobile[0].fields.phoneNumber
+    }
     return (
       <div className="App contact">
-
-        <Navigation contactMobile={this.props.contactMobile} titleContent={this.props.titleContent} />
+      <Navigation
+        contactMobile={this.props.contactMobile}
+        titleContent={this.props.titleContent} />
         <main>
           <div>
           <div className="contact-main not-found">
@@ -52,15 +62,15 @@ class NotFound extends Component {
               </div>
               <div>
                 <h3>Email</h3>
-                <a href="">email</a>
+                <a href={`mailto:${email}`}>{email}</a>
               </div>
               <div>
                 <h3>Instagram</h3>
-                <a href="">instagram</a>
+                <a target="_blank" href={`https://www.instagram.com/${instagram}`}>{instagram}</a>
               </div>
               <div>
                 <h3>Phone</h3>
-                <a href="">number</a>
+                <a href={`tel:${phone}`}>{phone}</a>
               </div>
               <div>
                 <h3>Newsletter</h3>

@@ -97,8 +97,8 @@ section, footer {
 }
 
 .slider nav div {
-    opacity: 0.5;
-    transition: 0.5s linear;
+    /* opacity: 0.5; */
+    transition: 0.025s ease-in;
 
 }
 
@@ -118,6 +118,20 @@ section, footer {
 }
 .slider nav div:hover {
   opacity:1;
+}
+
+.prev__title {
+  opacity: 0.6;
+  color: black;
+}
+.current__title .hover-Black {
+  color: black;
+  opacity: 1;
+}
+
+.current__title .hover-White {
+  color: white;
+  opacity: 1;
 }
 
 .moduleOneMobile:first-child div{
@@ -205,6 +219,7 @@ section, footer {
   font-size: 13px;
   margin-bottom: 4px;
   text-transform: uppercase;
+  font-weight: 200;
 }
 
 .contact-main p.shown {

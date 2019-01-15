@@ -5,8 +5,10 @@ import Contact from './Contact';
 import Post from './Post';
 import NotFound from './NotFound';
 import './App.css';
-import { Route, Switch, HashRouter } from 'react-router-dom'
+import {BrowserRouter, Route, Switch, HashRouter } from 'react-router-dom'
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
+import { generateKey,removeSpacing } from './utils/utils.js'
+
 
 // Import contentful
 var contentful = require('contentful')
@@ -18,6 +20,8 @@ class RouterIndex extends Component {
       contents: [],
       platform: ""
     }; // <- set up react state
+
+    this.replaceUrl = this.replaceUrl.bind(this)
   }
   componentWillMount(){
     var client = contentful.createClient({
@@ -28,14 +32,11 @@ class RouterIndex extends Component {
     // Get all articles
     client.getEntries({ content_type: 'article'
     }).then(function(res){
-      let content = res.items
-      let sortedContent = content.sort(function(a,b){
-        return a.fields.order > b.fields.order
-      });
+      let content = res.items;
 
-      let facesContent = content.filter(function(res){
-        return res.fields.tag === "faces";
-      });
+      let sortedContent = content.sort((a,b) => a.fields.order > b.fields.order);
+
+      let facesContent = content.filter((res) => res.fields.tag === "faces");
 
       let commercialContent = content.filter(function(res){
         return res.fields.tag === "commercial";
@@ -45,28 +46,40 @@ class RouterIndex extends Component {
         return res.fields.tag === "editorial";
       });
 
-      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
       iOS === true ? iOS = "isMobile" : iOS = "isDesktop";
+      var is_opera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+      let is_chrome = !!window.chrome;
+
+      is_chrome === true ? is_chrome = "isMobileChrome" : "";
+
 
       this.setState({
          contents: sortedContent,
          facesContent: facesContent,
          commercialContent: commercialContent,
          editorialContent: editorialContent,
-         platform: iOS
+         platform: iOS,
+         chrome: ""
        });
 
     }.bind(this));
 
    // Get the contact page
    client.getEntries({ content_type: 'contact'
-   }).then(function(res){
+ }).then((res) => {
      var contactContent = res.items
      this.setState({  contactContent });
-    }.bind(this));
+    });
 
   }
 
+   replaceUrl(str) {
+    str.replace(/\s/g, '-');
+    return str;
+  }
+  
   isIos() {
 
   }
@@ -75,15 +88,15 @@ class RouterIndex extends Component {
     let theRelatedContent = this.state.contents;
     let theContactContent = this.state.contactContent;
     const allMessages = this.state.contents.map(function(reg,i) {
-        return <Route key={i} path={"/"+ reg.fields.title} exact render={()=>
+        return <Route key={i} path={`/${removeSpacing(reg.fields.title)}`} exact render={()=>
           <Post postClassName={reg.fields.tag} relatedContent={theRelatedContent} titleContent={theRelatedContent} contactMobile={theContactContent}  postContent={reg}/>}/>;
       }
   )
 
 
     return (
-      <HashRouter>
-      <div className={`${this.state.platform} router-example`}>
+      <BrowserRouter>
+      <div className={`${this.state.platform} ${this.state.chrome} router-example`}>
           <Route render={({location}) => (
             <ReactCSSTransitionReplace
               transitionName="cross-fade"
@@ -98,13 +111,13 @@ class RouterIndex extends Component {
                   <Route path="/commercial" className="commercial" exact render={()=><GridwithSideBar num="2" className="commercial" contactMobile={this.state.contactContent}  titleContent={this.state.contents} gridContents={this.state.commercialContent}/>}/>
                   <Route path="/editorial" className="editorial" exact render={()=><GridwithSideBar contactMobile={this.state.contactContent}  className="editorial" num="2" titleContent={this.state.contents} gridContents={this.state.editorialContent}/>}/>
                   <Route path="/contact" className="contact" exact render={()=><Contact className="contact" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contactContent}/>}/>
-                  <Route path="*" titleContent={this.state.sortedContent} contactMobile={this.state.contactContent} component={NotFound} />
+                  <Route path="*" render={()=><NotFound titleContent={this.state.contents} contactMobile={this.state.contactContent} />} />
                 </Switch>
               </div>
             </ReactCSSTransitionReplace>
           )}/>
         </div>
-      </HashRouter>
+      </BrowserRouter>
 
     );
   }
