@@ -8,6 +8,7 @@ body {
   z-index: 99;
   position: fixed;
   width: 100%;
+  transform: translate(0,0);
 }
 
 .black.nav-header a,
@@ -178,7 +179,16 @@ section, footer {
 
 #post .slider {
       background-size: cover;
+      transform: translate(0,0);
+      will-change : transform;
+
+      /* -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      will-change: transform; */
+      /* position: absolute; */
 }
+
+ 
 
 .post-grid {
   padding-left: 0;
@@ -187,15 +197,23 @@ section, footer {
 
 #post .header {
   position: fixed;
-  top: calc(100vh - 70px);
+  /* top: calc(100vh - 70px); */
+  /* bottom: 30px; */
   color: white;
   text-align: left;
   left: 30px;
   right: 0;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   height: 0px;
   font-size: 13px;
   line-height: 15px;
+  transform: translate(0,0);
+  max-width: 30vw;
+}
+
+#post .header > div {
+  bottom: 30px;
+  position: fixed;
 }
 
 #post .header p {
@@ -228,9 +246,10 @@ section, footer {
   max-width: 400px;
 }
 
-.contact-main a {
+.contact-main a, .site__credit {
     color: #a9a9a9;
     transition: color .25s linear;
+    margin-top: 57px;
 }
 .contact-main a:hover {
     color: black;
@@ -262,5 +281,13 @@ input[type="submit"] {
   transition: .25s linear;
 }
 input[type="submit"]:hover {
-  color:black
+  color:black;
+}
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
 }

@@ -63,6 +63,10 @@ class Contact extends Component {
                   <input className={`${this.state.showIn} ${this.state.error}`} onChange={this.handleChange} placeholder="Email Address" value={this.state.value} type="email" name=""  />
                   <input className={this.state.showIn} onClick={this.updateMessage} type="submit" placeholder="Sign Up"  value="Sign Up"/>
                 </div>
+                <div className="site__credit">
+                  <p>Design by <a href="http://zyxt.info/" target="_blank">Zyxt</a></p>
+                  <p>Development by <a href="http://madeline-omoore.com/#/" target="_blank">Madeline O'Moore</a></p>
+                </div>
             </div>
     )
 
@@ -72,6 +76,7 @@ class Contact extends Component {
         <main>
           <div>{contactInfo}</div>
         </main>
+        
         <Footer />
       </div>
     );

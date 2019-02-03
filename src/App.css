@@ -15,6 +15,13 @@
   flex-direction: column;
   background: #eeeeee;
 }
+
+
+#root {
+  backface-visibility: visible;
+  will-change: contents;
+}
+
 @font-face {
   font-family: 'Lulo Clean';
   src: url('Assets/lulo.otf');
@@ -92,6 +99,17 @@ text-shadow: 0px 0px 0px rgba(0,0,0,0.5);
   color: black;
 }
 
+.post-grid.desktop .vertical-image div > div, .post-grid.desktop .horizontal-image div > div {
+  cursor: zoom-in;
+}
+
+
+
+
+.slider {
+  background-size: cover;
+  background-position: center;
+}
 @keyframes transitionIn {
   0% {
     transform: translateX(0vw);
@@ -318,28 +336,28 @@ section a {
 }
 
 
-.commercial #left-navigation a#face, .commercial a#face, .commercial #edit, .commercial a#contact {
+.commercial #left-navigation a#face, .commercial a#face, .commercial #edit, .commercial #right-navigation a#contact {
   opacity: 0.5;
   transition: 0.25 ease;
 }
-.commercial #left-navigation a#face:hover, .commercial  a#face:hover, .commercial a#edit:hover, .commercial a#contact:hover  {
+.commercial #left-navigation a#face:hover, .commercial  a#face:hover, .commercial a#edit:hover, .commercial #right-navigation a#contact:hover  {
   opacity: 1;
 }
 
 
-.faces #left-navigation a#edit, .faces a#comm, .faces a#contact, .faces  a#edit {
+.faces #left-navigation a#edit, .faces a#comm, .faces #right-navigation a#contact, .faces  a#edit {
   opacity: 0.5;
   transition: 0.25 ease;
 }
-.faces #left-navigation a#edit:hover, .faces  a#edit:hover, .faces a#comm:hover, .faces a#contact:hover  {
+.faces #left-navigation a#edit:hover, .faces  a#edit:hover, .faces a#comm:hover, .faces #right-navigation a#contact:hover  {
   opacity: 1;
 }
 
-.editorial #left-navigation a#face, .editorial  a#face, .editorial a#comm, .editorial a#contact {
+.editorial #left-navigation a#face, .editorial  a#face, .editorial a#comm, .editorial #right-navigation a#contact {
   opacity: 0.5;
   transition: 0.25 ease;
 }
-.editorial #left-navigation a#face:hover, .editorial a#comm:hover, .editorial a#contact:hover  {
+.editorial #left-navigation a#face:hover, .editorial a#comm:hover, .editorial #right-navigation a#contact:hover  {
   opacity: 1;
 }
 
@@ -378,7 +396,12 @@ a {
 #home .load-more{
   display: block;
 }
-
+#faces .home-grid > div:nth-child(7) {
+  padding-left: 0;
+}
+#faces .home-grid > div:nth-child(8) {
+  padding-left: 30px !important;
+}
  #home .slider .vertical-image {
    background-size: cover;
    background-repeat: no-repeat;
@@ -398,7 +421,7 @@ a {
   display: none;
   position: absolute;
   padding: 0px 1rem;
-  bottom: 20px;
+  bottom: 45px;
   z-index: 10;
   height: 100px !important;
   font-weight: 100;
@@ -480,7 +503,7 @@ p {
 }
 
 footer {
-  border-top: 1px solid #c6c6c6;
+  border-top: 1px solid #a9a9a92e;
   padding: 1.5rem;
   display: flex;
 }
@@ -588,6 +611,22 @@ footer #sig:hover {
   padding-bottom: 60px;
 }
 
+#post .more-posts{
+  z-index: auto;
+}
+
+.post-grid .video__wrapper {
+  display: flex;
+}
+
+.post-grid .inner__video{
+  background-color: black;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+}
+
 #post .slider {
   background-color: #eee;
   background-size: cover;
@@ -609,11 +648,12 @@ footer #sig:hover {
 
 .post-grid .horizontal-image {
   width: 66.66%;
-
+  height: 40vw;
 }
 
 .horizontal-image video {
   width: 100%;
+  height: 100%;
 }
 .home-grid .horizontal-image {
   width: 66.66%;
@@ -625,7 +665,7 @@ footer #sig:hover {
   flex-wrap: wrap;
   margin:0;
 }
-.home-grid div a > div:first-child,.post-grid div > div {
+.home-grid div a > div:first-child >div,.post-grid div > div > div{
   width: 100%;
     padding-top: 40vw;
   background-color: lightgray;
@@ -638,22 +678,22 @@ footer #sig:hover {
 }
 
 
-.home-grid .vertical-image a > div:first-child,.post-grid .vertical-image div > div {
+.home-grid .vertical-image a > div:first-child > div,.post-grid .vertical-image div > div {
       padding-top: 40vw;
   height: auto;
 }
 
-.home-grid .horizontal-image a > div:first-child,.post-grid .horizontal-image div > div {
+.home-grid .horizontal-image a > div:first-child > div,.post-grid .horizontal-image div > div {
     padding-top: 40vw;
   height: auto;
 }
 
-.more-posts .home-grid div a > div:first-child {
+.more-posts .home-grid div a > div:first-child >div {
   padding-top: 40vw;
   /* height: auto; */
 }
 
-#faces .home-grid div a > div:first-child {
+#faces .home-grid div a > div:first-child >div {
   padding-top: 40vw;
   height: auto;
 }
@@ -997,7 +1037,7 @@ section a:visited {
 
 }
 @media screen and (max-width: 1120px), (min-height: 680px) {
-  .home-grid .vertical-image a > div:first-child, .post-grid .vertical-image div > div {
+  .home-grid .vertical-image a > div:first-child > div, .post-grid .vertical-image div > div {
       padding-top: 40vw;
       height: auto;
   }
@@ -1006,12 +1046,12 @@ section a:visited {
   }
 }
 @media screen and (max-width: 786px), (max-height: 680px)  {
-  #faces .home-grid div a > div:first-child, .home-grid .vertical-image a > div:first-child, .post-grid .vertical-image div > div {
+  #faces .home-grid div a > div:first-child > div >div, .home-grid .vertical-image a > div:first-child  > div, .post-grid .vertical-image div > div >div {
       padding-top: 50vw;
       height: auto;
   }
 
-  .more-posts .home-grid div a > div:first-child, .home-grid div a > div:first-child, .post-grid div > div {
+  .more-posts .home-grid div a > div:first-child >div , .home-grid div a > div:first-child >div, .post-grid div > div> div {
     padding-top: 50vw;
       /* height: auto; */
   }
@@ -1020,6 +1060,18 @@ section a:visited {
 }
 
 @media screen and (max-width: 786px) {
+  .post-grid.mobile .vertical-image , .post-grid.desktop .horizontal-image {
+    cursor: zoom-in;
+    pointer-events: none;
+  }
+  .home-grid > div {
+    width: 100%;
+    padding: 0;
+  }
+  .home-grid > div, .post-grid > div {
+
+      margin-bottom: 50px;
+  }
   .desktop {
     display: none;
   }
@@ -1094,6 +1146,7 @@ section a:visited {
   #post .slider {
     background-size: cover;
     background-position: center;
+  
   }
 
   #post .loadMore {
@@ -1128,7 +1181,7 @@ section a:visited {
 
   /* Mobile Slider */
   .slider nav {
-    top: calc(100vh - 150px);
+    /* top: calc(100vh - 150px); */
     padding: 20px
   }
 
@@ -1193,16 +1246,32 @@ section a:visited {
     color: black;
   }
   .isMobile .slider nav{
-      top: calc(100vh - 230px);
+      /* top: calc(100vh - 230px); */
       padding: 20px;
   }
 
     .isMobile .mobile___credits {
-      bottom: 110px;
+      /* bottom: 110px; */
+      /* bottom: 140px; */
+      /* bottom: 22vh; */
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
     }
+/* 
+    .isMobileChrome .mobile___credits {
+      bottom: 30px !important;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+    } */
 
     .slider > div {
       height: 220vw;
+    }
+
+    .isMobile .mobile___credits {
+      bottom: 140px;
     }
 
   .isMobile  .slide-buttons {
@@ -1221,8 +1290,12 @@ section a:visited {
 
   .isMobile .header > div  {
 
-    position: relative;
-    top: -90px;
+    position: initial;
+    /* top: -90px; */
+  }
+
+  .isMobile .header {
+    bottom: 0px;
   }
 
   .overflow-none {
@@ -1248,9 +1321,29 @@ section a:visited {
   /** Mobile home grid **/
 
   .mobile.showNav {
-    height: 100%;
+    height: 100vh;
     overflow: auto;
      -webkit-overflow-scrolling: touch;
+  }
+
+  .showNav .site__credit {
+    text-transform: none;
+    margin-top: 46px;
+    border-bottom: 0px solid #a9a9a92e;
+    padding-bottom: 50px;
+  }
+  .showNav .news-title {
+    margin-top: 54px !important;
+  }
+
+  .showNav .site__credit a{
+    text-transform: none;
+    color: #a9a9a9 !important;
+    font-size: 12px !important;
+    display: inline !important;
+  }
+  .showNav .site__credit a:hover{
+   color: black !important;
   }
   #home .home-grid {
     margin-top: 107px;
@@ -1345,11 +1438,23 @@ section a:visited {
   .showNav footer #footer-right a {
     color:  #a2a2a2;
     opacity: 0.8;
+    display: none;
   }
   #footer-right #sig {
     opacity: 0.5;
     margin-top: 10px;
     pointer-events: none;
+  }
+
+  .mobile footer {
+    padding-top: 0px !important;
+  }
+  .isMobile .mobile.showNav {
+    padding-bottom: 100px;
+  }
+
+  .isMobileChrome .showNav {
+    padding-bottom: 0px !important;
   }
 
   .mobile.showNav small{
@@ -1399,11 +1504,15 @@ section a:visited {
   .about p:nth-child(1) {
     margin-top: 60px;
   }
-  .home-grid > div, .post-grid > div {
+  .home-grid > div > div, .post-grid > div > div {
       text-align: left;
       width: 100%;
       margin-bottom: 45px;
       padding:0;
+  }
+
+  .home-grid > div > div, .post-grid > div > div {
+    margin-bottom: 0;
   }
 
   .home-grid .horizontal-image {
@@ -1429,7 +1538,7 @@ section a:visited {
   footer {
     padding-bottom: 25px;
     padding-top: 25px;
-    border-top: 1px solid rgba(0,0,0,0.5);
+    border-top:  1px solid #a9a9a92e;
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -1471,19 +1580,21 @@ section a:visited {
   }
 
     #post .post-grid {
-    padding-bottom: 0;
+    padding-bottom: 10px;
   }
 
-   .home-grid .vertical-image a > div:first-child, .post-grid .vertical-image div > div , .vertical-image{
-    padding-top: 110vw;
+   .home-grid .vertical-image a > div:first-child > div, .post-grid .vertical-image div > div >div,.home-grid .vertical-image{
+    padding-top: 110vw !important;
   }
 
-   .post-grid .vertical-image div {
+   .post-grid .vertical-image div > div {
        padding-top: 110vw;
    }
+   #faces .home-grid > div:nth-child(8) {
+    padding-left: 0px !important;
+}
 
-
-  #post .home-grid .vertical-image, #faces .home-grid div a > div:first-child {
+  #post .home-grid .vertical-image, #faces .home-grid div a > div:first-child > div {
     padding-top: 110vw !important;
   }
   /*
@@ -1500,6 +1611,13 @@ section a:visited {
   }
   #post .header {
     left: 15px;
+    max-width: 100vw;
+  }
+
+  .isMobile #post .header {
+    /* display: flex;
+    justify-content: flex-end;
+    flex-direction: column; */
   }
   .post-grid .horizontal-image, .post-grid .vertical-image {
       width: 100%;
@@ -1530,6 +1648,8 @@ section a:visited {
   #faces .home-grid > div {
       padding: 0 0px;
   }
+
+
 
   #faces aside {
     display: none;
@@ -1655,3 +1775,22 @@ section a:visited {
      transform: translateX(0vw);
     transition: all 1000ms ease-in;
   }
+
+ .isMobile .mobile___credits {
+    height: 200px !important;
+    font-weight: 100;
+    display: flex !important;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+
+  .isMobileChrome  .mobile___credits {
+      bottom: 50px !important;
+    }
+
+    .isMobileChrome  .slide-buttons {
+    bottom: 0px !important;
+  }
+  
+  

@@ -177,19 +177,19 @@ class Navigation extends Component {
       if (this.props.titleContent !== undefined ) {
         faceTitles = this.props.titleContent.map(function(reg,i) {
            if (reg.fields.tag ==="faces") {
-             return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
+             return <li>   <Link key={generateKey(i)} to={'/project/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
            }
         })
 
        commercialTitles = this.props.titleContent.map(function(reg,i) {
           if (reg.fields.tag ==="commercial") {
-            return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
+            return <li>   <Link key={generateKey(i)} to={'/project/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
           }
        })
 
         editorialTitles = this.props.titleContent.map(function(reg,i) {
            if (reg.fields.tag ==="editorial") {
-             return <li>   <Link key={generateKey(i)} to={'/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
+             return <li>   <Link key={generateKey(i)} to={'/project/'+removeSpacing(reg.fields.title)}> {reg.fields.title}</Link></li>;
            }
         })
       }
@@ -212,13 +212,13 @@ class Navigation extends Component {
     return (
       <header className={this.state.navColor + " nav-header"}>
         <nav id="left-navigation" className="desktop">
-          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='face' to='/faces'>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='face' to='/project-category/faces'>
               Faces
           </Link>
-          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='comm' to='/commercial'>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='comm' to='/project-category/commercial'>
               Commerical
           </Link>
-          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='edit' to='/editorial'>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='edit' to='/project-category/editorial'>
               Editorial
           </Link>
         </nav>
@@ -242,28 +242,33 @@ class Navigation extends Component {
         </nav>
         <div className={"mobile " + this.state.mobileOpen}>
           <div>
-           <Link onClick={this.state.removeFixed} id='face' to='/faces'>Faces</Link>
+           <Link onClick={this.state.removeFixed} id='face' to='/project-category/faces'>Faces</Link>
             <ul id="facesList" className={this.state.faceState}>
               {faceTitles}
             </ul>
             <small onClick={this.toggleFace}>View List</small>
-            <Link onClick={this.state.removeFixed} id='comm' to='/commercial'>Commerical</Link>
+            <Link onClick={this.state.removeFixed} id='comm' to='/project-category/commercial'>Commerical</Link>
               <ul id="commericalList" className={this.state.commState}>
                 {commercialTitles}
               </ul>
             <small onClick={this.toggleComm}>View List</small>
-          <Link onClick={this.state.removeFixed} id='edit' to='/editorial'>Editorial</Link>
+          <Link onClick={this.state.removeFixed} id='edit' to='/project-category/editorial'>Editorial</Link>
             <ul id="editorialList" className={this.state.editState}>
               {editorialTitles}
             </ul>
             <small onClick={this.toggleEditorial}>View List</small>
             <MobileContent mobileContact={contactObj}/>
-            <h3>Newsletter</h3>
+            <h3 className="news-title">Newsletter</h3>
             <div className="newsletter">
               <p className={this.state.showMessage}>Thank you for subscribing. </p>
               <input className={`${this.state.showIn} ${this.state.error}`} onChange={this.handleChange} placeholder="Email Address" value={this.state.value} type="email" name=""  />
               <input className={this.state.showIn} onClick={this.updateMessage} type="submit" placeholder="submit"  value="Sign Up"/></div>
           </div>
+
+          <div className="site__credit">
+                  <p>Design by <a href="http://zyxt.info/" target="_blank">Zyxt</a></p>
+                  <p>Development by <a href="http://madeline-omoore.com/#/" target="_blank">Madeline O'Moore</a></p>
+                </div>
             <Footer />
         </div>
 

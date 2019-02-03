@@ -18,6 +18,7 @@ class RouterIndex extends Component {
     super(props);
     this.state = {
       contents: [],
+      content: [],
       platform: ""
     }; // <- set up react state
 
@@ -44,17 +45,29 @@ class RouterIndex extends Component {
       let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
       iOS === true ? iOS = "isMobile" : iOS = "isDesktop";
 
-      let is_chrome = !!window.chrome;
+      let is_chrome;
 
-      is_chrome === true ? is_chrome = "isMobileChrome" : "";
+      var isChrome = /Chrome/.test(navigator.userAgent);
+      
+
+      if (iOS ==="isMobile") {
+        if(navigator.userAgent.match('CriOS')) {
+          is_chrome = "isMobileChrome";
+          alert(is_chrome)
+        }  else {
+          is_chrome = "not__chrome"
+        }
+      } 
+
 
       this.setState({
         //  contents: sortedContent,
          facesContent: facesContent,
+         content,
          commercialContent,
          editorialContent,
          platform: iOS,
-         chrome: ""
+         chrome: is_chrome
        });
 
     }.bind(this));
@@ -80,8 +93,8 @@ class RouterIndex extends Component {
   render() {
     let theRelatedContent = this.state.contents;
     let theContactContent = this.state.contactContent;
-    const allMessages = this.state.contents.map(function(reg,i) {
-        return <Route key={generateKey(i)} path={`/${removeSpacing(reg.fields.title)}`} exact render={()=>
+    const allMessages = this.state.content.map(function(reg,i) {
+        return <Route key={generateKey(i)} path={`/project/${removeSpacing(reg.fields.title)}`} exact render={()=>
           <Post postClassName={reg.fields.tag} relatedContent={theRelatedContent} titleContent={theRelatedContent} contactMobile={theContactContent}  postContent={reg}/>}/>;
       }
   )
@@ -89,7 +102,7 @@ class RouterIndex extends Component {
 
     return (
       <BrowserRouter>
-      <div className={`${this.state.platform} ${this.state.chrome} router-example`}>
+      <div className={`${this.state.platform} ${this.state.chrome}  router-example`}>
           <Route render={({location}) => (
             <ReactCSSTransitionReplace
               transitionName="cross-fade"
@@ -97,15 +110,18 @@ class RouterIndex extends Component {
               transitionLeaveTimeout={500}
             >
               <div key={location.pathname}>
-                <Switch location={location}>
-                  <Route path="/" exact className="index" render={()=><App num="2" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contents}/>}/>
-                    {allMessages}
-                  <Route path="/faces" className="faces"  exact render={()=><GridwithSideBar num="2" className="faces"    contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.facesContent}/>}/>
-                  <Route path="/commercial" className="commercial" exact render={()=><GridwithSideBar num="2" className="commercial" contactMobile={this.state.contactContent}  titleContent={this.state.contents} gridContents={this.state.commercialContent}/>}/>
-                  <Route path="/editorial" className="editorial" exact render={()=><GridwithSideBar contactMobile={this.state.contactContent}  className="editorial" num="2" titleContent={this.state.contents} gridContents={this.state.editorialContent}/>}/>
-                  <Route path="/contact" className="contact" exact render={()=><Contact className="contact" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contactContent}/>}/>
-                  <Route path="*" render={()=><NotFound titleContent={this.state.contents} contactMobile={this.state.contactContent} />} />
-                </Switch>
+              {this.state.content.length > 1  && 
+                       <Switch location={location}>
+                       <Route path="/" exact className="index" render={()=><App num="2" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contents}/>}/>
+                         {allMessages}
+                       <Route path="/project-category/faces" className="faces"  exact render={()=><GridwithSideBar num="2" className="faces"    contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.facesContent}/>}/>
+                       <Route path="/project-category/commercial" className="commercial" exact render={()=><GridwithSideBar num="2" className="commercial" contactMobile={this.state.contactContent}  titleContent={this.state.contents} gridContents={this.state.commercialContent}/>}/>
+                       <Route path="/project-category/editorial" className="editorial" exact render={()=><GridwithSideBar contactMobile={this.state.contactContent}  className="editorial" num="2" titleContent={this.state.contents} gridContents={this.state.editorialContent}/>}/>
+                       <Route path="/contact" className="contact" exact render={()=><Contact className="contact" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contactContent}/>}/>
+                       <Route path="*" render={()=><NotFound titleContent={this.state.contents} contactMobile={this.state.contactContent} />} />
+                     </Switch>
+              }
+               
               </div>
             </ReactCSSTransitionReplace>
           )}/>

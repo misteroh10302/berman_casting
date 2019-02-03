@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import '../App.css';
+import { generateKey,removeSpacing } from '../utils/utils.js'
 
 class Sidebar extends Component {
 
@@ -40,7 +41,7 @@ class Sidebar extends Component {
   render() {
     let allTitles = this.props.theTitles.map((reg,i) =>
           <li onMouseOver={this.makeGray} key={`${reg.sys.id}`} onMouseOut={this.returnGray}>
-            <Link to={'/'+reg.fields.title}>{reg.fields.title} </Link>
+            <Link to={'/project/'+removeSpacing(reg.fields.title)}>{reg.fields.title} </Link>
         </li>
     )
 

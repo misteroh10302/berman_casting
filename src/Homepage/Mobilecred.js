@@ -13,7 +13,7 @@ class Creditsmob extends Component {
         <span key={this.props.creditText.sys.id}>
           <div >
             <ReactMarkdown source={this.props.creditText.fields.postInformation} />
-            <small><Link to={"/"+ this.props.creditText.fields.title}>VIEW MORE</Link></small>
+            <small><Link to={"/project/"+ this.props.creditText.fields.title}>VIEW MORE</Link></small>
           </div>
           <div className="slide-buttons mobile">
               <div className="buttons" onClick={() => this.props.mobileSlider(logoColor, textColor, creditColor, dataPropNext, "prev")}>&larr; </div>

@@ -121,9 +121,9 @@ class Footer extends Component {
     return (
       <footer>
           <nav id="footer-left">
-            <Link id="about" to='/faces'>Faces</Link>
-            <Link to='/commercial'>Commerical</Link>
-            <Link to='/editorial'>Editorial</Link>
+            <Link id="about" to='/project-category/faces'>Faces</Link>
+            <Link to='/project-category/commercial'>Commerical</Link>
+            <Link to='/project-category/editorial'>Editorial</Link>
             <Link id="contact" to='/contact'>Contact</Link>
             <button id="newslettter" className={`${this.state.newsButton}`} onClick={this.showNews}>Newsletter</button>
             <p

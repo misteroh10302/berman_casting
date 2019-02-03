@@ -6,6 +6,9 @@ import Sidebar from '../Categories/Sidebar';
 import '../App.css';
 import ReactMarkdown from 'react-markdown';
 import PostGrid from './PostGrid';
+import BackgroundImageLoader from './helper/BackgroundImageLoader';
+import PostImageHeader from './elements/PostImageHeader';
+import PostVideoHeader from './elements/PostVideoHeader';
 
 class Post extends Component {
   constructor(props) {
@@ -60,44 +63,26 @@ class Post extends Component {
 
 
   render() {
-    // TO DO: Break Post Grids into Smaller Components
-    //        Break SLider Header into a Smaller Component
+
     let postGrid, postGridDesktop, postGridMobile, verticalBanner, headerSection, theVideoElement;
+    let postBanner = this.props.postContent.fields.banner;
     headerSection = <section className="loading">Loading</section>;
-    // if there is no post content return
-    if(this.state.postContent.length <=0) {
-      // postGrid = "nothing here";
-      // return postGrid;
-    } else {
-    
-    }
-
-
-    let input = " add Information";
-    if (this.props.postContent.fields.postInformation)  {
-       input = this.props.postContent.fields.postInformation;
-    }
 
     // if the banner is a video
-    if (this.props.postContent.fields.banner && this.props.postContent.fields.banner.fields.file.details.image !== undefined) {
+    if (postBanner && postBanner.fields.file.details.image !== undefined) {
       // if the banner is vertical make the header nav have black and add a class
-      if (this.props.postContent.fields.banner.fields.file.details.image.height > this.props.postContent.fields.banner.fields.file.details.image.width ) {
+      if (postBanner.fields.file.details.image.height > postBanner.fields.file.details.image.width ) {
         verticalBanner = "verticalBanner"
       }
+      headerSection = <BackgroundImageLoader style={{width: '100%'}}
+        preview={`${postBanner.fields.file.url}?w=200`}
+        image={`${postBanner.fields.file.url}?w=1920`}
+      />
 
-      headerSection =  <section style={{backgroundImage: 'url('+this.props.postContent.fields.banner.fields.file.url+')'}} className="slider"></section>;
-
-    } else if (this.props.postContent.fields.banner) {
+    } else if (postBanner) {
       // if the image is actually a mov
-
-      theVideoElement = this.props.postContent.fields.banner.fields.file.url;
-      headerSection = <section style={{backgroundColo: 'whitesmoke'}} className="slider">
-            <video width="320" height="240" autoPlay muted loop nocontrols>
-              <source src={theVideoElement} type="video/mp4" />
-
-            Your browser does not support the video tag.
-            </video>
-      </section>;
+      theVideoElement = postBanner.fields.file.url;
+      headerSection = <PostVideoHeader theVideoElement={theVideoElement}/>;
 
     }
 
@@ -110,10 +95,13 @@ class Post extends Component {
           postClass={`: ${this.state.postClass}`}
           titleContent={this.props.titleContent}
           nameOfPage={`: ${this.props.postContent.fields.title}`}/>
-        {headerSection}
+       <span>
+       {headerSection}
         <div className="header">
-          <ReactMarkdown source={input} />
+          <ReactMarkdown source={this.props.postContent.fields.postInformation ? this.props.postContent.fields.postInformation : ''} />
         </div>
+        </span>
+       
           <section className="main">
             {/* Must get the load more button to work here! */}
             <PostGrid content={this.state.postContent} screenType={"desktop"}/>

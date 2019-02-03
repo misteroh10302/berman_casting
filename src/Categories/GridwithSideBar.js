@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import Homegrid from '../Homepage/Homegrid';
 import Sidebar from './Sidebar';
 
+
 class GridwithSideBar extends Component {
   componentWillMount() {
       window.scrollTo(0, 0);

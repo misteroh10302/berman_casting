@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import '../App.css';
 import ReactMarkdown from 'react-markdown';
-import Creditsmob from './Mobilecred';
+// import Creditsmob from './Mobilecred';
 import { generateKey,removeSpacing } from '../utils/utils.js'
 import styled from 'styled-components';
 
 const CreditWith = styled.div`
-  width: 50%;
+  width: 25%;
+  margin-right: 15px;
+  display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
 `;
 
 
@@ -18,12 +22,16 @@ class SliderHome extends Component {
   }
 
   updateSlider = (currentSlide) => {
-    console.log('hello???')
-      this.setState(prevState => ({
+    if (this.state.currentSlide === currentSlide) {
+      return;
+    } else {
+      this.setState( prevState => ({
         currentSlide,
         previousSlide: prevState.currentSlide
       }))
       this.props.updateHeader(currentSlide)
+    }
+     
   }
 
   render() {
@@ -31,7 +39,7 @@ class SliderHome extends Component {
       if (index < 4) {
         if (name.fields.banner && name.fields.banner.fields.file.url.includes('video')) {
           return (
-            <video key={`${generateKey(name.sys.id)}`} width="320" height="240" autoPlay muted loop nocontrols='true' className={(index === this.state.currentSlide ? "current" : index === this.state.previousSlide ? "previous"  : ""  )}>
+            <video key={`${generateKey(name.sys.id)}`} playsInline width="320" height="240" autoPlay muted loop nocontrols='true' className={(index === this.state.currentSlide ? "current" : index === this.state.previousSlide ? "previous"  : ""  )}>
               <source src={name.fields.banner.fields.file.url} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
@@ -51,7 +59,7 @@ class SliderHome extends Component {
       index < 4 ? <CreditWith key={index} onMouseOver={event => this.updateSlider(index)} className={(this.state.currentSlide === index ? 'current__title' : 'prev__title')}>
             <div className={`desktop hover-${credit.fields.homepageHeaderCreditColor}`} >
               <ReactMarkdown source={credit.fields.postInformation} />
-              <small><Link to={"/"+removeSpacing(credit.fields.title)}>VIEW MORE</Link></small>
+              <small><Link to={"/project/"+removeSpacing(credit.fields.title)}>VIEW MORE</Link></small>
             </div>
         </CreditWith> :  null
     );
@@ -59,7 +67,7 @@ class SliderHome extends Component {
     const creditsMobile = this.props.theContent.map((credit,index) =>
       index < 4 ? <div key={index} className={(index === this.state.currentSlide ? "mobile__credit__current" : "mobile__credit__other")} >
           <ReactMarkdown source={credit.fields.postInformation} />
-          <small><Link to={"/"+removeSpacing(credit.fields.title)}>VIEW MORE</Link></small>
+          <small><Link to={"/project/"+removeSpacing(credit.fields.title)}>VIEW MORE</Link></small>
       </div> :  null
     );
     return (

@@ -17,7 +17,7 @@ class Credits extends Component {
             onMouseEnter={() => this.props.mouseOnCredit(logoColor, textColor, creditColor, this.props.dataNum)}>
             <div className={`desktop`}  >
               <ReactMarkdown source={credit.fields.postInformation} />
-              <small><Link to={"/"+ credit.fields.title}>VIEW MORE</Link></small>
+              <small><Link to={"/project/"+ credit.fields.title}>VIEW MORE</Link></small>
             </div>
         </span>
     );
