@@ -29,7 +29,7 @@ class Homegrid extends Component {
   }
   componentWillMount(){
     // window.addEventListener('scroll', this.lockScroll);
-    console.log(this.props.length)
+  
     if (this.props.theContent.length > 1  && this.props.theContent !== undefined ) {
       this.state.limit <= this.props.theContent.length ?  this.setState({
         loadMore: 'load-more' }) : this.setState({
@@ -39,6 +39,7 @@ class Homegrid extends Component {
   }
 
   fadeImages(e){
+    // console.log(e);
     const allGridItems = document.querySelectorAll('.home-grid > div');
     allGridItems.forEach((item) => { item.classList.add("lighter__opacity"); })
     e.target.closest('.lighter__opacity').classList.remove("lighter__opacity");
@@ -71,53 +72,14 @@ class Homegrid extends Component {
                   fadeImages={fadeImages}
                   fadeOut={fadeOut}
                   />
-      // allGrid = this.props.theContent.slice(0,this.state.limit).map(function(reg,i) {
-      //   let imageClass = i;
-      //   let thumbFile = reg.fields.thumbnail.fields.file;
-      //   let imHeight = parseInt(reg.fields.thumbnail.fields.file.details.image.height, 10);
-      //   let imWidth = parseInt(reg.fields.thumbnail.fields.file.details.image.width, 10);
-      //   imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
-
-      //    const input = reg.fields.postInformation;
-      //     return <div key={`${reg.sys.id}`} className={imageClass } onMouseOver={fadeImages} onMouseOut={fadeOut}>
-      //        <Link to={`/project/${removeSpacing(reg.fields.title)}`}>                                            
-      //               <div >
-      //                 <ImageLoaderBackground className={imageClass}
-      //                   preview={`${reg.fields.thumbnail.fields.file.url}?w=200`}
-      //                   image={`${reg.fields.thumbnail.fields.file.url}?w=1920`} >
-      //                   </ImageLoaderBackground>
-      //                 </div>
-      //           <ReactMarkdown skipHtml source={input} />
-      //           <small className='view__more'> see more </small>
-      //        </Link>
-      //      </div>
-      //    })
+      
     } else {
       allGrid = <GridHomePage 
                   content={this.props.theContent}
                   fadeImages={fadeImages}
                   fadeOut={fadeOut}
                   />
-      // allGrid = this.props.theContent.map(function(reg,i) {
-      // let imageClass = i;
-      // let thumbFile = reg.fields.thumbnail.fields.file;
-      // let imHeight = parseInt(thumbFile.details.image.height, 10);
-      // let imWidth = parseInt(thumbFile.details.image.width, 10);
-      // imHeight > imWidth ? imageClass = "vertical-image" : imageClass = "horizontal-image";
-      // const input = reg.fields.postInformation;
-      //     return <div key={`${reg.sys.id}`}  onMouseOver={fadeImages} onMouseOut={fadeOut}>
-      //         <Link to={`/project/${removeSpacing(reg.fields.title)}`}>
-      //         <div >
-      //                 <ImageLoaderBackground className={imageClass}
-      //                   preview={`${thumbFile.url}?w=200`}
-      //                   image={`${thumbFile.url}?w=1920`} >
-      //                   </ImageLoaderBackground>
-      //                 </div>
-      //             <ReactMarkdown skipHtml source={input} />
-      //             <small className='view__more'> see more </small>
-      //         </Link>
-      //       </div>
-      //   }  )
+
     }
     return (
       <main className="home-grid">

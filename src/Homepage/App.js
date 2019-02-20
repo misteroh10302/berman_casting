@@ -21,11 +21,11 @@ class App extends Component {
 
   componentDidMount() {
       window.scrollTo(0, 0);
-      window.addEventListener('scroll',this.onScrollLock);
+      // window.addEventListener('scroll',this.onScrollLock);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll',this.onScrollLock);
+    // window.removeEventListener('scroll',this.onScrollLock);
   }
 
   onScrollLock() {
@@ -42,24 +42,35 @@ class App extends Component {
   }
 
   render() {
-    let homePageLogo, homePageText, homePageCredit;
+    let homePageLogo, homePageText, homePageCredit,homePageContact;
+    
     if (this.props.gridContents[0] ) {
-      homePageLogo = this.props.gridContents[this.state.theCurrentSlide].fields.headerHomepageLogoColor;
-      homePageText = this.props.gridContents[this.state.theCurrentSlide].fields.headerHompageTextColor;
-      homePageCredit = this.props.gridContents[this.state.theCurrentSlide].fields.homepageHeaderCreditColor;
-    } else {
-      homePageLogo, homePageText, homePageCredit = "white";
+      let gridContent = this.props.gridContents[this.state.theCurrentSlide];
+      homePageLogo = gridContent.fields.headerHomepageLogoColor;
+      homePageText = gridContent.fields.headerHompageTextColor;
+      homePageCredit = gridContent.fields.homepageHeaderCreditColor;
+      if (gridContent.fields.contactColor) {
+        homePageContact = gridContent.fields.contactColor;
+      }
+      
+
+     } else {
+      homePageLogo, homePageText, homePageCredit, homePageContact = "white";
     }
 
     return (
-      <div className={`App ${this.state.scrollLock}`} id="home">
-        <header className={`App-header ${this.state.currentSlide} ${this.state.previousActive}`} ref={(item) => {this.header = item}}
-            data-logo={homePageLogo}
-            data-text={homePageText}
-            data-credit={homePageCredit}>
-              <Navigation
+      <div className={`App ${this.state.scrollLock}`} id="home"   
+      data-logo={homePageLogo}
+      data-text={homePageText}
+      data-credit={homePageCredit}
+      data-contact={homePageContact}>
+      <Navigation
                 contactMobile={this.props.contactMobile}
                 titleContent={this.props.titleContent} />
+        <header className={`App-header ${this.state.currentSlide} ${this.state.previousActive}`} ref={(item) => {this.header = item}}
+          
+            >
+              
                 <SliderHome updateHeader={this.updateHeader} theContent={this.props.gridContents} />
         </header>
         <section>

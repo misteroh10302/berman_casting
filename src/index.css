@@ -38,6 +38,10 @@ section, footer {
   position: absolute;
   width: 100vw;
       transform: translateX(0);
+     
+}
+.slider > .previous, .slider > .current {
+  background-color: rgb(242, 242, 242);
 }
 .slider #one {
   background-color: white;

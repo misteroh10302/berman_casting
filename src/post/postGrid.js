@@ -93,19 +93,22 @@ class PostGrid extends Component {
   }
 
   nextImage = () => {
-    console.log(this.state.modalImage, this.props.content.length - 2);
+    // console.log(this.state.modalImage, this.props.content.length - 2);
     // this.setState({ 
     //   modalImage: this.state.modalImage++
     // })
-    if (this.state.modalImage < this.props.content.length - 1 ) {
-      this.setState({ 
-          modalImage: this.state.modalImage+= 1
+    if (this.props.content ) {
+      if (this.state.modalImage < this.props.content.length - 1 ) {
+        this.setState({ 
+            modalImage: this.state.modalImage+= 1
+          })
+      } else {
+        this.setState({ 
+          modalImage: 0
         })
-    } else {
-      this.setState({ 
-        modalImage: 0
-      })
+      }
     }
+   
   }
 
   previousImage = () => {
@@ -123,7 +126,7 @@ class PostGrid extends Component {
   render() {
       return (
           <section className={`post-grid ${this.props.screenType}`}>
-              {this.props.content.map((reg, i)=> {
+              {this.props.content && this.props.content.map((reg, i)=> {
                     let imageClass;
                     let imageFile = reg.fields.file;
                     if (imageFile.url.includes('mov') || imageFile.url.includes('mp4')) {
@@ -160,10 +163,10 @@ class PostGrid extends Component {
                     <ImageContainer onClick={this.closeModal}>
                        {/* On click send the index number to the state */}
                        {/* Make the image in side of the modal that image number */}
-                      {this.props.content[this.state.modalImage].fields.file.contentType.includes('image') && 
+                      {this.props.content && this.props.content[this.state.modalImage].fields.file.contentType.includes('image') && 
                         <img src={`${this.props.content[this.state.modalImage].fields.file.url}?w=1920`} />
                       }
-                       {this.props.content[this.state.modalImage].fields.file.contentType.includes('video') && 
+                       {this.props.content && this.props.content[this.state.modalImage].fields.file.contentType.includes('video') && 
                          <video src={this.props.content[this.state.modalImage].fields.file.url} controls playsInline>
                          </video>
                       }

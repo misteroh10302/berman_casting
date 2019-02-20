@@ -15,6 +15,7 @@
     "react-markdown": "^3.4.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-swipe-events": "^1.0.3",
     "react-test-renderer": "^16.4.2",
     "react-testing-library": "^5.0.1",
     "react-transition-group": "^1.2.1",

@@ -45,9 +45,12 @@ class Post extends Component {
     this.setState({ height });
 
     // Load More Post
-    if (this.state.limit >= this.state.postContent.length) {
-      this.setState({loadMore: 'hidden'});
+    if (this.state.postContent) {
+      if (this.state.limit >= this.state.postContent.length) {
+        this.setState({loadMore: 'hidden'});
+      }
     }
+   
   }
 
   onLoadMore(e) {
@@ -86,8 +89,17 @@ class Post extends Component {
 
     }
 
+    console.log(this.props.postContent)
+
     return (
-      <div className={`App ${verticalBanner}`} id="post">
+      <div 
+        className={`App ${verticalBanner} ${this.props.postContent.fields.title}`} 
+        id="post"
+        data-logo={this.props.postContent.fields.headerHomepageLogoColor || ''}
+        data-text={this.props.postContent.fields.headerHompageTextColor || ''}
+        data-credit={this.props.postContent.fields.homepageHeaderCreditColor || ''}
+        data-contact={this.props.postContent.fields.contactColor || ''}
+        >
         <Navigation
           scrollToPoint={this.state.height}
           contactMobile={this.props.contactMobile}
@@ -106,15 +118,6 @@ class Post extends Component {
             {/* Must get the load more button to work here! */}
             <PostGrid content={this.state.postContent} screenType={"desktop"}/>
             <PostGrid content={this.state.postContent} screenType={"mobile"}/>
-
-            {/* <section className="post-grid"> */}
-              {/* <PostGrid content={this.state.postContent}/> */}
-              {/* {postGridDesktop}
-              {postGridMobile} */}
-              {/* <a href=""
-                className={`${this.state.loadMore} loadMore`}
-                onClick={this.onLoadMore}>LOAD MORE</a> */}
-            {/* </section> */}
           </section>
           <section
             className="more-posts"

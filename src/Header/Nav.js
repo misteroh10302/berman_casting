@@ -47,11 +47,13 @@ class Navigation extends Component {
   openMobile() {
     let pageScrollTop = window.scrollY;
     let nameOfPage = this.props.nameOfPage;
-    if (nameOfPage ===": commercial") {
+    let pageCategory =this.props.postClass;
+    console.log(this.props.postClass);
+    if (nameOfPage ===": commercial" || pageCategory ===": commercial") {
       this.setState({commState: "shown"})
-    } else if (nameOfPage === ": faces")  {
+    } else if (nameOfPage === ": faces" || pageCategory ===": faces")  {
       this.setState({faceState: "shown"})
-    } else if (nameOfPage === ": editorial") {
+    } else if (nameOfPage === ": editorial"  || pageCategory ===": editorial") {
       this.setState({editState: "shown"})
     }
     if(this.state.mobileOpen === "hidden") {
@@ -91,7 +93,7 @@ class Navigation extends Component {
       this.setState({
         faceState: "shown",
       })
-      event.target.innerHTML = "close list";
+      event.target.innerHTML = "close";
     } else {
       this.setState({
         faceState: "hidden",
@@ -105,7 +107,7 @@ class Navigation extends Component {
 
     if(this.state.commState === "hidden") {
       this.setState({commState: "shown"})
-      event.target.innerHTML = "close list";
+      event.target.innerHTML = "close";
     } else {
       this.setState({commState: "hidden"  })
       event.target.innerHTML = "view list";
@@ -116,7 +118,7 @@ class Navigation extends Component {
   toggleEditorial(event){
     if(this.state.editState === "hidden") {
       this.setState({editState: "shown"})
-      event.target.innerHTML = "close list";
+      event.target.innerHTML = "close";
     } else {
       this.setState({editState: "hidden"})
       event.target.innerHTML = "view list";
@@ -212,11 +214,11 @@ class Navigation extends Component {
     return (
       <header className={this.state.navColor + " nav-header"}>
         <nav id="left-navigation" className="desktop">
-          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='face' to='/project-category/faces'>
+          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='face' to='/project/faces'>
               Faces
           </Link>
           <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='comm' to='/project-category/commercial'>
-              Commerical
+              Commercial
           </Link>
           <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id='edit' to='/project-category/editorial'>
               Editorial
@@ -227,7 +229,11 @@ class Navigation extends Component {
           <h2>Casting </h2>
         </nav>
         <nav id="right-navigation" className="desktop">
-          <Link onMouseOver={this.fadeOut} onMouseLeave = {this.fadeBack} id="contact" to='/contact'>Contact</Link>
+          <Link 
+             onMouseOver={this.fadeOut} 
+             onMouseLeave = {this.fadeBack} 
+           
+             id="contact" to='/contact'>Contact</Link>
         </nav>
         <nav className={"mobile " + this.state.mobIsOpen}>
           <span className="bars" onClick={this.openMobile}>
@@ -242,12 +248,16 @@ class Navigation extends Component {
         </nav>
         <div className={"mobile " + this.state.mobileOpen}>
           <div>
-           <Link onClick={this.state.removeFixed} id='face' to='/project-category/faces'>Faces</Link>
+           <Link onClick={this.state.removeFixed} id='face' to='/project/faces'>Faces</Link>
             <ul id="facesList" className={this.state.faceState}>
               {faceTitles}
             </ul>
-            <small onClick={this.toggleFace}>View List</small>
-            <Link onClick={this.state.removeFixed} id='comm' to='/project-category/commercial'>Commerical</Link>
+            <small 
+            // onClick={this.toggleFace}
+            >
+            {/* View List */}
+            </small>
+            <Link onClick={this.state.removeFixed} id='comm' to='/project-category/commercial'>Commercial</Link>
               <ul id="commericalList" className={this.state.commState}>
                 {commercialTitles}
               </ul>

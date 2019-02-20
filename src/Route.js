@@ -53,7 +53,7 @@ class RouterIndex extends Component {
       if (iOS ==="isMobile") {
         if(navigator.userAgent.match('CriOS')) {
           is_chrome = "isMobileChrome";
-          alert(is_chrome)
+          // alert(is_chrome)
         }  else {
           is_chrome = "not__chrome"
         }
@@ -82,7 +82,7 @@ class RouterIndex extends Component {
   client.getEntries({ content_type: 'homepagePosts'
   }).then((res) => {
       let homepage = res.items[0].fields['homepagePosts']
-      console.log(homepage)
+      // console.log(homepage)
       this.setState({  contents: homepage });
      });
 
@@ -114,7 +114,7 @@ class RouterIndex extends Component {
                        <Switch location={location}>
                        <Route path="/" exact className="index" render={()=><App num="2" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contents}/>}/>
                          {allMessages}
-                       <Route path="/project-category/faces" className="faces"  exact render={()=><GridwithSideBar num="2" className="faces"    contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.facesContent}/>}/>
+                       <Route path="/project/faces" className="faces"  exact render={()=><GridwithSideBar num="2" className="faces"    contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.facesContent}/>}/>
                        <Route path="/project-category/commercial" className="commercial" exact render={()=><GridwithSideBar num="2" className="commercial" contactMobile={this.state.contactContent}  titleContent={this.state.contents} gridContents={this.state.commercialContent}/>}/>
                        <Route path="/project-category/editorial" className="editorial" exact render={()=><GridwithSideBar contactMobile={this.state.contactContent}  className="editorial" num="2" titleContent={this.state.contents} gridContents={this.state.editorialContent}/>}/>
                        <Route path="/contact" className="contact" exact render={()=><Contact className="contact" contactMobile={this.state.contactContent} titleContent={this.state.contents} gridContents={this.state.contactContent}/>}/>
